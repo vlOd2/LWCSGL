@@ -10,7 +10,7 @@ Invoking any APIs on other platforms will result in an exception!<br>
 Checks the [testing project](https://github.com/vlOd2/LWCSGL/tree/main/LWCSGL-Test) for an example on how to use this library
 
 # 📌 Features/Information
-- Written in C# (.NET Framework 4.0, will be ported to .NET 8)
+- Written in C# (.NET 8)
 - Has the essentials APIs (Display, Keyboard, Mouse, GL11, GL11C)
 - Uses winforms with WGL
 - ~~Has support for OpenGL 1.2 and ARB extensions~~ (in the works)
