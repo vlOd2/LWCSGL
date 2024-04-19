@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LWCSGL", "LWCSGL\LWCSGL.csproj", "{CA7A0D9F-0B4A-4685-BFE9-07015519D46D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LWCSGL-Test", "LWCSGL-Test\LWCSGL-Test.csproj", "{3EF9821A-E784-4819-870D-97E292E0572C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA7A0D9F-0B4A-4685-BFE9-07015519D46D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA7A0D9F-0B4A-4685-BFE9-07015519D46D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA7A0D9F-0B4A-4685-BFE9-07015519D46D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA7A0D9F-0B4A-4685-BFE9-07015519D46D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EF9821A-E784-4819-870D-97E292E0572C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EF9821A-E784-4819-870D-97E292E0572C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EF9821A-E784-4819-870D-97E292E0572C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EF9821A-E784-4819-870D-97E292E0572C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1BE1C5CB-07C9-452E-B620-6EBA1799F675}
+	EndGlobalSection
+EndGlobal
