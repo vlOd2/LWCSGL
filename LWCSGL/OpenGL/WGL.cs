@@ -73,6 +73,9 @@ namespace LWCSGL.OpenGL
         public static extern nint wglCreateContext(nint param0);
 
         [DllImport("opengl32.dll")]
+        public static extern nint wglGetProcAddress([In()][MarshalAs(UnmanagedType.LPStr)] string param0);
+
+        [DllImport("opengl32.dll")]
         public static extern bool wglMakeCurrent(nint param0, nint param1);
 
         [DllImport("opengl32.dll")]

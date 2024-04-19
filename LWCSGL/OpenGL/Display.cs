@@ -25,7 +25,8 @@ namespace LWCSGL.OpenGL
         private bool closeRequested;
         private bool wasResized;
         private bool doNotCancelCloseEvent;
-        private static readonly HashSet<string> supportedExt = new HashSet<string>();
+        private GLPtrSource ptrSource;
+        private HashSet<string> supportedExt = new HashSet<string>();
 
         internal static void CheckForDisplay()
         {
@@ -274,10 +275,14 @@ namespace LWCSGL.OpenGL
             };
             form.Show();
 
+            supportedExt.Clear();
             string[] extensions = GLU.GetGLString(GL11C.GL_EXTENSIONS).Split(
                 new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            supportedExt.Clear();
             foreach (string ext in extensions) supportedExt.Add(ext.Trim());
+
+            ptrSource = new GLPtrSource();
+            GL12.Load(ptrSource);
+            GLARB.Load(ptrSource);
         }
 
         /// <summary>
@@ -287,7 +292,7 @@ namespace LWCSGL.OpenGL
         /// <returns>true if the extension is supported, false if otherwise</returns>
         public static bool CheckGLExtension(string ext)
         {
-            return supportedExt.Contains(ext);
+            return instance.supportedExt.Contains(ext);
         }
 
         /// <summary>
@@ -296,11 +301,14 @@ namespace LWCSGL.OpenGL
         public static void Destroy()
         {
             CheckForDisplay();
+            GL12.Unload();
+            GLARB.Unload();
             instance.viewport.Dispose();
             instance.form.Close();
             instance.form.Dispose();
             instance.viewport = null;
             instance.form = null;
+            instance.ptrSource.Dispose();
             instance = new Display();
         }
 

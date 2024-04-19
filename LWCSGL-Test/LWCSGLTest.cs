@@ -70,6 +70,8 @@ namespace LWCSGL
                 Display.Update();
                 Thread.Sleep(100);
             }
+
+            Display.Destroy();
         }
     }
 }
