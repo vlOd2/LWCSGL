@@ -14,8 +14,8 @@ namespace LWCSGL.OpenGL
         /// Whether to log to the console debug messages
         /// </summary>
         public static bool DebugMode;
-        private IntPtr deviceContext;
-        private IntPtr renderContext;
+        private nint deviceContext;
+        private nint renderContext;
 
         internal GLViewport()
         {
@@ -40,7 +40,7 @@ namespace LWCSGL.OpenGL
             Log($"Initialising WGL...");
 
             deviceContext = GetDC(Handle);
-            if (deviceContext == IntPtr.Zero)
+            if (deviceContext == nint.Zero)
             {
                 HandleStartupError("Couldn't create a WIN32 context!");
                 return;
@@ -70,7 +70,7 @@ namespace LWCSGL.OpenGL
             }
 
             renderContext = wglCreateContext(deviceContext);
-            if (renderContext == IntPtr.Zero)
+            if (renderContext == nint.Zero)
             {
                 HandleStartupError("Couldn't create a render context!");
                 return;
@@ -85,11 +85,11 @@ namespace LWCSGL.OpenGL
         private void DestroyWGL()
         {
             Log($"Destroying WGL...");
-            wglMakeCurrent(deviceContext, IntPtr.Zero);
+            wglMakeCurrent(deviceContext, nint.Zero);
             wglDeleteContext(renderContext);
             ReleaseDC(Handle, deviceContext);
-            deviceContext = IntPtr.Zero;
-            renderContext = IntPtr.Zero;
+            deviceContext = nint.Zero;
+            renderContext = nint.Zero;
             Log($"Destroyed WGL");
         }
 
@@ -111,7 +111,7 @@ namespace LWCSGL.OpenGL
         {
             if (m.Msg == WM_PAINT)
             {
-                if (renderContext != IntPtr.Zero) GL11.glFlush();
+                if (renderContext != nint.Zero) GL11.glFlush();
                 PAINTSTRUCT paintStruct = new PAINTSTRUCT();
                 BeginPaint(Handle, ref paintStruct);
                 EndPaint(Handle, ref paintStruct);

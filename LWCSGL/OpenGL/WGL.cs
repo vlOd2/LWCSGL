@@ -39,29 +39,29 @@ namespace LWCSGL.OpenGL
         public const int DM_DISPLAYFREQUENCY = 4194304;
 
         [DllImport("user32.dll")]
-        public static extern IntPtr BeginPaint(IntPtr hWnd, ref PAINTSTRUCT lpPaint);
+        public static extern nint BeginPaint(nint hWnd, ref PAINTSTRUCT lpPaint);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool EndPaint(IntPtr hWnd, ref PAINTSTRUCT lpPaint);
+        public static extern bool EndPaint(nint hWnd, ref PAINTSTRUCT lpPaint);
 
         [DllImport("user32.dll")]
-        public static extern IntPtr GetDC(IntPtr hWnd);
+        public static extern nint GetDC(nint hWnd);
 
         [DllImport("user32.dll")]
-        public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
+        public static extern int ReleaseDC(nint hWnd, nint hDC);
 
         [DllImport("gdi32.dll")]
-        public static extern int ChoosePixelFormat(IntPtr hdc, ref PIXELFORMATDESCRIPTOR ppfd);
+        public static extern int ChoosePixelFormat(nint hdc, ref PIXELFORMATDESCRIPTOR ppfd);
 
         [DllImport("gdi32.dll")]
-        public static extern bool SetPixelFormat(IntPtr hdc, int format, ref PIXELFORMATDESCRIPTOR ppfd);
+        public static extern bool SetPixelFormat(nint hdc, int format, ref PIXELFORMATDESCRIPTOR ppfd);
 
         [DllImport("user32.dll")]
         public static extern int ChangeDisplaySettingsA(ref DEVMODE lpDevMode, int dwFlags);
 
         [DllImport("user32.dll")]
-        public static extern int ChangeDisplaySettingsA(IntPtr lpDevMode, int dwFlags);
+        public static extern int ChangeDisplaySettingsA(nint lpDevMode, int dwFlags);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -70,19 +70,19 @@ namespace LWCSGL.OpenGL
             int iModeNum, ref DEVMODE lpDevMode);
 
         [DllImport("opengl32.dll")]
-        public static extern IntPtr wglCreateContext(IntPtr param0);
+        public static extern nint wglCreateContext(nint param0);
 
         [DllImport("opengl32.dll")]
-        public static extern bool wglMakeCurrent(IntPtr param0, IntPtr param1);
+        public static extern bool wglMakeCurrent(nint param0, nint param1);
 
         [DllImport("opengl32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool wglDeleteContext(IntPtr param0);
+        public static extern bool wglDeleteContext(nint param0);
 
         [StructLayout(LayoutKind.Sequential)]
         public struct PAINTSTRUCT
         {
-            public IntPtr hdc;
+            public nint hdc;
             public bool fErase;
             public Rectangle rcPaint;
             public bool fRestore;

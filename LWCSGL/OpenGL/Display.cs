@@ -61,7 +61,7 @@ namespace LWCSGL.OpenGL
 
         private void ChangeDisplayMode__LeaveFullscreen()
         {
-            ChangeDisplaySettingsA(IntPtr.Zero, CDS_RESET);
+            ChangeDisplaySettingsA(nint.Zero, CDS_RESET);
             // Janky way to restore resizability
             form.FormBorderStyle = form.MaximizeBox ?
                 FormBorderStyle.Sizable : FormBorderStyle.FixedDialog;

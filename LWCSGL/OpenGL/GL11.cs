@@ -40,7 +40,7 @@ namespace LWCSGL.OpenGL
         public static extern void glCallList(uint list);
 
         [DllImport("opengl32.dll")]
-        public static extern void glCallLists(uint n, uint type, IntPtr lists);
+        public static extern void glCallLists(uint n, uint type, nint lists);
 
         [DllImport("opengl32.dll")]
         public static extern void glClear(uint mask);
@@ -166,7 +166,7 @@ namespace LWCSGL.OpenGL
         public static extern void glColorMaterial(uint face, uint mode);
 
         [DllImport("opengl32.dll")]
-        public static extern void glColorPointer(int size, uint type, uint stride, IntPtr pointer);
+        public static extern void glColorPointer(int size, uint type, uint stride, nint pointer);
 
         [DllImport("opengl32.dll")]
         public static extern void glCopyPixels(int x, int y, uint width, uint height, uint type);
@@ -214,16 +214,16 @@ namespace LWCSGL.OpenGL
         public static extern void glDrawBuffer(uint mode);
 
         [DllImport("opengl32.dll")]
-        public static extern void glDrawElements(uint mode, uint count, uint type, IntPtr indices);
+        public static extern void glDrawElements(uint mode, uint count, uint type, nint indices);
 
         [DllImport("opengl32.dll")]
-        public static extern void glDrawPixels(uint width, uint height, uint format, uint type, IntPtr pixels);
+        public static extern void glDrawPixels(uint width, uint height, uint format, uint type, nint pixels);
 
         [DllImport("opengl32.dll")]
         public static extern void glEdgeFlag([MarshalAs(UnmanagedType.I1)] bool flag);
 
         [DllImport("opengl32.dll")]
-        public static extern void glEdgeFlagPointer(uint stride, IntPtr pointer);
+        public static extern void glEdgeFlagPointer(uint stride, nint pointer);
 
         [DllImport("opengl32.dll")]
         public static extern void glEdgeFlagv(bool[] flag);
@@ -358,13 +358,13 @@ namespace LWCSGL.OpenGL
         public static extern void glGetPixelMapusv(uint map, ushort[] values);
 
         [DllImport("opengl32.dll")]
-        public static extern void glGetPointerv(uint pname, IntPtr[] @params);
+        public static extern void glGetPointerv(uint pname, nint[] @params);
 
         [DllImport("opengl32.dll")]
         public static extern void glGetPolygonStipple(byte[] mask);
 
         [DllImport("opengl32.dll")]
-        public static extern IntPtr glGetString(uint name);
+        public static extern nint glGetString(uint name);
 
         [DllImport("opengl32.dll")]
         public static extern void glGetTexEnvfv(uint target, uint pname, float[] @params);
@@ -382,7 +382,7 @@ namespace LWCSGL.OpenGL
         public static extern void glGetTexGeniv(uint coord, uint pname, int[] @params);
 
         [DllImport("opengl32.dll")]
-        public static extern void glGetTexImage(uint target, int level, uint format, uint type, IntPtr pixels);
+        public static extern void glGetTexImage(uint target, int level, uint format, uint type, nint pixels);
 
         [DllImport("opengl32.dll")]
         public static extern void glGetTexLevelParameterfv(uint target, int level, uint pname, float[] @params);
@@ -403,7 +403,7 @@ namespace LWCSGL.OpenGL
         public static extern void glIndexMask(uint mask);
 
         [DllImport("opengl32.dll")]
-        public static extern void glIndexPointer(uint type, uint stride, IntPtr pointer);
+        public static extern void glIndexPointer(uint type, uint stride, nint pointer);
 
         [DllImport("opengl32.dll")]
         public static extern void glIndexd(double c);
@@ -439,7 +439,7 @@ namespace LWCSGL.OpenGL
         public static extern void glInitNames();
 
         [DllImport("opengl32.dll")]
-        public static extern void glInterleavedArrays(uint format, uint stride, IntPtr pointer);
+        public static extern void glInterleavedArrays(uint format, uint stride, nint pointer);
 
         [DllImport("opengl32.dll")]
         [return: MarshalAs(UnmanagedType.I1)]
@@ -580,7 +580,7 @@ namespace LWCSGL.OpenGL
         public static extern void glNormal3sv(short[] v);
 
         [DllImport("opengl32.dll")]
-        public static extern void glNormalPointer(uint type, uint stride, IntPtr pointer);
+        public static extern void glNormalPointer(uint type, uint stride, nint pointer);
 
         [DllImport("opengl32.dll")]
         public static extern void glOrtho(double left, double right, double bottom, double top, double zNear, double zFar);
@@ -727,7 +727,7 @@ namespace LWCSGL.OpenGL
         public static extern void glReadBuffer(uint mode);
 
         [DllImport("opengl32.dll")]
-        public static extern void glReadPixels(int x, int y, uint width, uint height, uint format, uint type, IntPtr pixels);
+        public static extern void glReadPixels(int x, int y, uint width, uint height, uint format, uint type, nint pixels);
 
         [DllImport("opengl32.dll")]
         public static extern void glRectd(double x1, double y1, double x2, double y2);
@@ -883,7 +883,7 @@ namespace LWCSGL.OpenGL
         public static extern void glTexCoord4sv(short[] v);
 
         [DllImport("opengl32.dll")]
-        public static extern void glTexCoordPointer(int size, uint type, uint stride, IntPtr pointer);
+        public static extern void glTexCoordPointer(int size, uint type, uint stride, nint pointer);
 
         [DllImport("opengl32.dll")]
         public static extern void glTexEnvf(uint target, uint pname, float param);
@@ -916,10 +916,10 @@ namespace LWCSGL.OpenGL
         public static extern void glTexGeniv(uint coord, uint pname, int[] @params);
 
         [DllImport("opengl32.dll")]
-        public static extern void glTexImage1D(uint target, int level, int internalformat, uint width, int border, uint format, uint type, IntPtr pixels);
+        public static extern void glTexImage1D(uint target, int level, int internalformat, uint width, int border, uint format, uint type, nint pixels);
 
         [DllImport("opengl32.dll")]
-        public static extern void glTexImage2D(uint target, int level, int internalformat, uint width, uint height, int border, uint format, uint type, IntPtr pixels);
+        public static extern void glTexImage2D(uint target, int level, int internalformat, uint width, uint height, int border, uint format, uint type, nint pixels);
 
         [DllImport("opengl32.dll")]
         public static extern void glTexParameterf(uint target, uint pname, float param);
@@ -934,10 +934,10 @@ namespace LWCSGL.OpenGL
         public static extern void glTexParameteriv(uint target, uint pname, int[] @params);
 
         [DllImport("opengl32.dll")]
-        public static extern void glTexSubImage1D(uint target, int level, int xoffset, uint width, uint format, uint type, IntPtr pixels);
+        public static extern void glTexSubImage1D(uint target, int level, int xoffset, uint width, uint format, uint type, nint pixels);
 
         [DllImport("opengl32.dll")]
-        public static extern void glTexSubImage2D(uint target, int level, int xoffset, int yoffset, uint width, uint height, uint format, uint type, IntPtr pixels);
+        public static extern void glTexSubImage2D(uint target, int level, int xoffset, int yoffset, uint width, uint height, uint format, uint type, nint pixels);
 
         [DllImport("opengl32.dll")]
         public static extern void glTranslated(double x, double y, double z);
@@ -1018,7 +1018,7 @@ namespace LWCSGL.OpenGL
         public static extern void glVertex4sv(short[] v);
 
         [DllImport("opengl32.dll")]
-        public static extern void glVertexPointer(int size, uint type, uint stride, IntPtr pointer);
+        public static extern void glVertexPointer(int size, uint type, uint stride, nint pointer);
 
         public static void glViewport(int x, int y, int width, int height)
         {
