@@ -13,7 +13,7 @@ Checks the [testing project](https://github.com/vlOd2/LWCSGL/tree/main/LWCSGL-Te
 - Written in C# (.NET 8)
 - Has the essentials APIs (Display, Keyboard, Mouse, GL11, GL11C)
 - Uses winforms with WGL
-- ~~Has support for OpenGL 1.2 and ARB extensions~~ (in the works)
+- Has support for OpenGL 1.2 and ARB extensions (thanks to [Dart](https://github.com/dart25))
   
 # 👨‍💻 Contributing
 You may proceed with the following steps if you wish to contribute to this project
