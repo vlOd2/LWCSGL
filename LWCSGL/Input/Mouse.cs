@@ -1,4 +1,5 @@
 ﻿using LWCSGL.OpenGL;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
@@ -12,7 +13,7 @@ namespace LWCSGL.Input
     public class Mouse
     {
         [DllImport("user32.dll")]
-        public static extern short GetAsyncKeyState(int vKey);
+        private static extern short GetAsyncKeyState(int vKey);
         private const int BUTTON_LEFT = 0;
         private const int BUTTON_RIGHT = 1;
         private const int BUTTON_NONE = -1;
@@ -228,6 +229,30 @@ namespace LWCSGL.Input
                 Cursor.Hide();
             else
                 Cursor.Show();
+        }
+
+        /// <summary>
+        /// Checks if the specified mouse button is down
+        /// </summary>
+        /// <param name="btn">The button to check</param>
+        /// <returns>true if the button is down, false if not</returns>
+        public static bool IsButtonDown(int btn)
+        {
+            int vk;
+
+            switch (btn) 
+            {
+                case BUTTON_LEFT:
+                    vk = (int)Keys.LButton;
+                    break;
+                case BUTTON_RIGHT:
+                    vk = (int)Keys.RButton;
+                    break;
+                default:
+                    throw new ArgumentException("Invalid button!");
+            }
+
+            return GetAsyncKeyState(vk) != 0;
         }
     }
 }
