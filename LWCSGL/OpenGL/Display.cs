@@ -303,6 +303,7 @@ namespace LWCSGL.OpenGL
             CheckForDisplay();
             GL12.Unload();
             GLARB.Unload();
+            instance.doNotCancelCloseEvent = true;
             instance.viewport.Dispose();
             instance.form.Close();
             instance.form.Dispose();
