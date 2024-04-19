@@ -5,6 +5,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using static LWCSGL.OpenGL.WGL;
 
+#pragma warning disable CA1416
+
 namespace LWCSGL.OpenGL
 {
     /// <summary>
@@ -28,8 +30,15 @@ namespace LWCSGL.OpenGL
         private GLPtrSource ptrSource;
         private HashSet<string> supportedExt = new HashSet<string>();
 
+        private static void DoPlatformCheck()
+        {
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT) return;
+            throw new PlatformNotSupportedException();
+        }
+
         internal static void CheckForDisplay()
         {
+            DoPlatformCheck();
             if (IsCreated()) return;
             throw new InvalidOperationException("Display not created!");
         }
@@ -245,6 +254,7 @@ namespace LWCSGL.OpenGL
 
         private void _Create()
         {
+            DoPlatformCheck();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -400,6 +410,7 @@ namespace LWCSGL.OpenGL
         /// </summary>
         public static void PrintStatusReport()
         {
+            CheckForDisplay();
             Console.WriteLine("------------- DISPLAY STATUS ------------");
             Console.WriteLine($"DisplayMode: {GetDisplayMode()}");
             Console.WriteLine($"Width: {GetWidth()}");
