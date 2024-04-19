@@ -11,6 +11,10 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <Title>Lightweight CSharp Game Library</Title>
+    <PackageId>LWCSGL</PackageId>
+    <Authors>vlOd</Authors>
+    <Version>1.0.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
