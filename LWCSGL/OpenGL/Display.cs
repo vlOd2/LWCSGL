@@ -38,7 +38,6 @@ namespace LWCSGL.OpenGL
 
         internal static void CheckForDisplay()
         {
-            DoPlatformCheck();
             if (IsCreated()) return;
             throw new InvalidOperationException("Display not created!");
         }
