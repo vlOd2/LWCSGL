@@ -357,8 +357,8 @@ namespace LWCSGL.OpenGL
                 wasResized = false;
 
             // Poll the mouse, to update the cursor position
-            if (Mouse.instance != null)
-                Mouse.instance.Poll();
+            if (Mouse.instance != null && updateWin)
+                Mouse.Poll();
         }
 
         /// <summary>

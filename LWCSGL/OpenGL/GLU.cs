@@ -9,7 +9,7 @@ namespace LWCSGL.OpenGL
     /// <summary>
     /// Utilities for OpenGL
     /// </summary>
-    public class GLU
+    public static class GLU
     {
         private static float Deg2Rad(float degrees)
             => degrees * (float)Math.PI / 180.0F;
