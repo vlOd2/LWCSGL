@@ -57,6 +57,10 @@ namespace LWCSGL.OpenGL
         [DllImport("gdi32.dll")]
         public static extern bool SetPixelFormat(nint hdc, int format, ref PIXELFORMATDESCRIPTOR ppfd);
 
+        [DllImport("gdi32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool SwapBuffers(nint hdc);
+
         [DllImport("user32.dll")]
         public static extern int ChangeDisplaySettingsA(ref DEVMODE lpDevMode, int dwFlags);
 

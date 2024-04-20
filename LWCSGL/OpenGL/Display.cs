@@ -48,6 +48,12 @@ namespace LWCSGL.OpenGL
             return instance.form;
         }
 
+        private static GLViewport GetViewportSafely()
+        {
+            CheckForDisplay();
+            return instance.viewport;
+        }
+
         private static void AssertNullArg(object arg)
         {
             if (arg != null) return;
@@ -174,9 +180,9 @@ namespace LWCSGL.OpenGL
         /// <returns>the title of the window</returns>
         public static string GetTitle() => GetFormSafely().Text;
         /// <summary>
-        /// Stub method, doesn't do anything
+        /// Swaps the front and back buffers
         /// </summary>
-        public static void SwapBuffers() { }
+        public static void SwapBuffers() => GetViewportSafely().SwapBuffers();
 
         /// <summary>
         /// Sets the size of the viewport<para></para>
@@ -260,6 +266,7 @@ namespace LWCSGL.OpenGL
             form = new Form();
             form.Text = initTitle;
             form.Icon = initIcon;
+            form.BackColor = Color.Black;
             form.StartPosition = FormStartPosition.CenterScreen;
             form.MaximizeBox = false;
             form.FormBorderStyle = FormBorderStyle.FixedDialog;
@@ -342,7 +349,6 @@ namespace LWCSGL.OpenGL
         private void _Update(bool updateWin)
         {
             CheckForDisplay();
-            viewport.Invalidate();
             if (updateWin) ProcessMessages();
 
             int nw = displayMode.width;
@@ -359,6 +365,9 @@ namespace LWCSGL.OpenGL
             // Poll the mouse, to update the cursor position
             if (Mouse.instance != null && updateWin)
                 Mouse.Poll();
+
+            SwapBuffers();
+            viewport.Invalidate();
         }
 
         /// <summary>

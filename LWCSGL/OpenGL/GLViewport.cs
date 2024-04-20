@@ -22,6 +22,8 @@ namespace LWCSGL.OpenGL
             InitWGL();
         }
 
+        internal void SwapBuffers() => WGL.SwapBuffers(deviceContext);
+
         private static void HandleStartupError(string msg)
         {
             if (DebugMode)
@@ -50,7 +52,7 @@ namespace LWCSGL.OpenGL
             PIXELFORMATDESCRIPTOR pixelFormatDesc = new PIXELFORMATDESCRIPTOR();
             pixelFormatDesc.nSize = (short)Marshal.SizeOf(typeof(PIXELFORMATDESCRIPTOR));
             pixelFormatDesc.nVersion = 1;
-            pixelFormatDesc.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL;
+            pixelFormatDesc.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER;
             pixelFormatDesc.iPixelType = PFD_TYPE_RGBA;
             pixelFormatDesc.cColorBits = 32;
             pixelFormatDesc.cAlphaBits = 8;
@@ -111,7 +113,6 @@ namespace LWCSGL.OpenGL
         {
             if (m.Msg == WM_PAINT)
             {
-                if (renderContext != nint.Zero) GL11.glFlush();
                 PAINTSTRUCT paintStruct = new PAINTSTRUCT();
                 BeginPaint(Handle, ref paintStruct);
                 EndPaint(Handle, ref paintStruct);
