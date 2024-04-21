@@ -1,7 +1,7 @@
 ﻿// TODO: Add documentation
 #pragma warning disable 1591
 
-namespace LWCSGL.OpenGL
+namespace LWCSGL.OpenAL
 {
     /// <summary>
     /// Constants for OpenALC 1.0

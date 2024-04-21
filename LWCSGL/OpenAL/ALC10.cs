@@ -1,23 +1,24 @@
 ﻿using System.Runtime.InteropServices;
 
 // TODO: Add documentation
-#pragma warning disable 15911
+#pragma warning disable 1591
 
-namespace LWCSGL.OpenGL
+namespace LWCSGL.OpenAL
 {
     /// <summary>
     /// OpenALC 1.0 APIs
     /// </summary>
     public unsafe class ALC10
     {
-        private const string DLL_NAME = "al.dll";
+        private const string DLL_NAME = "openal.dll";
 
         #region Methods
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern nint alcCreateContext(nint device, int[] attrlist);
+        public static extern nint alcCreateContext(nint device, uint[] attrlist);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte alcMakeContextCurrent(nint context);
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool alcMakeContextCurrent(nint context);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
         public static extern void alcProcessContext(nint context);
@@ -38,31 +39,34 @@ namespace LWCSGL.OpenGL
         public static extern nint alcOpenDevice([In()][MarshalAs(UnmanagedType.LPStr)] string devicename);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte alcCloseDevice(nint device);
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool alcCloseDevice(nint device);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int alcGetError(nint device);
+        public static extern uint alcGetError(nint device);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte alcIsExtensionPresent(nint device, [In()][MarshalAs(UnmanagedType.LPStr)] string extname);
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool alcIsExtensionPresent(nint device, [In()][MarshalAs(UnmanagedType.LPStr)] string extname);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
         public static extern nint alcGetProcAddress(nint device, [In()][MarshalAs(UnmanagedType.LPStr)] string funcname);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int alcGetEnumValue(nint device, [In()][MarshalAs(UnmanagedType.LPStr)] string enumname);
+        public static extern uint alcGetEnumValue(nint device, [In()][MarshalAs(UnmanagedType.LPStr)] string enumname);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern nint alcGetString(nint device, int param);
+        public static extern nint alcGetString(nint device, uint param);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void alcGetIntegerv(nint device, int param, int size, int[] values);
+        public static extern void alcGetIntegerv(nint device, uint param, uint size, uint[] values);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern nint alcCaptureOpenDevice([In()][MarshalAs(UnmanagedType.LPStr)] string devicename, uint frequency, int format, int buffersize);
+        public static extern nint alcCaptureOpenDevice([In()][MarshalAs(UnmanagedType.LPStr)] string devicename, uint frequency, uint format, uint buffersize);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte alcCaptureCloseDevice(nint device);
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool alcCaptureCloseDevice(nint device);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
         public static extern void alcCaptureStart(nint device);
@@ -71,15 +75,16 @@ namespace LWCSGL.OpenGL
         public static extern void alcCaptureStop(nint device);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void alcCaptureSamples(nint device, nint buffer, int samples);
+        public static extern void alcCaptureSamples(nint device, nint buffer, uint samples);
         #endregion
 
         #region Methods (pointers)
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void* alcCreateContext(void* device, int* attrlist);
+        public static extern void* alcCreateContext(void* device, uint* attrlist);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte alcMakeContextCurrent(void* context);
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool alcMakeContextCurrent(void* context);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
         public static extern void alcProcessContext(void* context);
@@ -100,31 +105,34 @@ namespace LWCSGL.OpenGL
         public static extern void* alcOpenDevice2([In()][MarshalAs(UnmanagedType.LPStr)] string devicename);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte alcCloseDevice(void* device);
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool alcCloseDevice(void* device);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int alcGetError(void* device);
+        public static extern uint alcGetError(void* device);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte alcIsExtensionPresent(void* device, [In()][MarshalAs(UnmanagedType.LPStr)] string extname);
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool alcIsExtensionPresent(void* device, [In()][MarshalAs(UnmanagedType.LPStr)] string extname);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
         public static extern void* alcGetProcAddress(void* device, [In()][MarshalAs(UnmanagedType.LPStr)] string funcname);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int alcGetEnumValue(void* device, [In()][MarshalAs(UnmanagedType.LPStr)] string enumname);
+        public static extern uint alcGetEnumValue(void* device, [In()][MarshalAs(UnmanagedType.LPStr)] string enumname);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void* alcGetString(void* device, int param);
+        public static extern void* alcGetString(void* device, uint param);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void alcGetIntegerv(void* device, int param, int size, int* values);
+        public static extern void alcGetIntegerv(void* device, uint param, uint size, uint* values);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void* alcCaptureOpenDevice2([In()][MarshalAs(UnmanagedType.LPStr)] string devicename, uint frequency, int format, int buffersize);
+        public static extern void* alcCaptureOpenDevice2([In()][MarshalAs(UnmanagedType.LPStr)] string devicename, uint frequency, uint format, uint buffersize);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern byte alcCaptureCloseDevice(void* device);
+        [return: MarshalAs(UnmanagedType.I1)]
+        public static extern bool alcCaptureCloseDevice(void* device);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
         public static extern void alcCaptureStart(void* device);
@@ -133,7 +141,7 @@ namespace LWCSGL.OpenGL
         public static extern void alcCaptureStop(void* device);
 
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void alcCaptureSamples(void* device, void* buffer, int samples);
+        public static extern void alcCaptureSamples(void* device, void* buffer, uint samples);
         #endregion
     }
 }

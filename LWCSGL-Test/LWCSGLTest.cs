@@ -6,11 +6,91 @@ using LWCSGL.Input;
 using LWCSGL.OpenGL;
 using static LWCSGL.OpenGL.GL11;
 using static LWCSGL.OpenGL.GL11C;
+using static LWCSGL.OpenAL.AL10;
+using static LWCSGL.OpenAL.AL10C;
+using static LWCSGL.OpenAL.ALC10;
 
 namespace LWCSGL
 {
     public class LWCSGLTest
     {
+        private const int AL_DEMO_DURATION = 3; /* seconds */
+        private const int AL_DEMO_SAMPLE_RATE = 44000;
+        private const double AL_DEMO_FREQUENCY = 440;
+        private const double AL_DEMO_AMPLITUDE = 127;
+
+        private static void SetupBuffer(uint buffer) 
+        {
+            byte[] data = new byte[AL_DEMO_SAMPLE_RATE * AL_DEMO_DURATION];
+            double increment = AL_DEMO_FREQUENCY * 2 * Math.PI / AL_DEMO_SAMPLE_RATE;
+            double phase = 0;
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                double sample = Math.Sin(phase) * AL_DEMO_AMPLITUDE;
+                byte clippedSample = (byte)Math.Max(byte.MinValue, Math.Min(byte.MaxValue, sample));
+                data[i] = clippedSample;
+
+                phase += increment;
+                if (phase > 2 * Math.PI)
+                    phase -= 2 * Math.PI;
+            }
+
+            GCHandle handle = GCHandle.Alloc(data, GCHandleType.Pinned);
+            alBufferData(buffer, AL_FORMAT_MONO8,
+                handle.AddrOfPinnedObject(), (uint)data.Length, AL_DEMO_SAMPLE_RATE);
+            handle.Free();
+        }
+
+        private static void DemoAL() 
+        {
+            Console.WriteLine("Initialising OpenAL...");
+            nint device = alcOpenDevice(null);
+            if (device == nint.Zero) 
+            {
+                Console.Error.WriteLine($"OpenAL: Failed to open a device");
+                return;
+            }
+            nint context = alcCreateContext(device, null);
+            if (context == nint.Zero)
+            {
+                Console.Error.WriteLine($"OpenAL: Failed to create a context");
+                return;
+            }
+            if (!alcMakeContextCurrent(context)) 
+            {
+                Console.Error.WriteLine($"OpenAL: Failed to make the context current");
+                return;
+            }
+
+            uint[] source = new uint[1];
+            alGenSources(1, source);
+            alSourcef(source[0], AL_PITCH, 1);
+            alSourcef(source[0], AL_GAIN, 1);
+            alSource3f(source[0], AL_POSITION, 0, 0, 0);
+            alSource3f(source[0], AL_VELOCITY, 0, 0, 0);
+            alSourcei(source[0], AL_LOOPING, (int)AL_FALSE);
+
+            uint[] buffer = new uint[1];
+            alGenBuffers(1, buffer);
+            SetupBuffer(buffer[0]);
+            alSourcei(source[0], AL_BUFFER, buffer[0]);
+
+            Console.WriteLine("Playing OpenAL demo, please wait...");
+            alSourcePlay(source[0]);
+            uint[] state = new uint[1];
+            alGetSourcei(source[0], AL_SOURCE_STATE, state);
+            while (state[0] == AL_PLAYING)
+                alGetSourcei(source[0], AL_SOURCE_STATE, state);
+
+            Console.WriteLine("Destroying OpenAL...");
+            alDeleteSources(1, source);
+            alDeleteBuffers(1, buffer);
+            alcMakeContextCurrent(nint.Zero);
+            alcDestroyContext(context);
+            alcCloseDevice(device);
+        }
+
         private static void SetupGL() 
         {
             glEnable(GL_TEXTURE_2D);
@@ -82,6 +162,7 @@ namespace LWCSGL
 
         static void Main(string[] args)
         {
+            DemoAL();
             GLViewport.DebugMode = true;
             Display.Create();
             Keyboard.Create();
@@ -93,7 +174,6 @@ namespace LWCSGL
 
             int frames = 0;
             long frameTime = TimeUtil.MilliTime;
-
 
             while (!Display.IsCloseRequested())
             {

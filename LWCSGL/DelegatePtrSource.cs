@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using LWCSGL.OpenGL;
 
 /*
  * Code originally written by Dart (https://github.com/dart25)
  * Modified to meet the needs of the library
 */
 
-namespace LWCSGL.OpenGL 
+namespace LWCSGL
 {
     internal class DelegatePtrSource : IDisposable
     {
@@ -14,7 +15,7 @@ namespace LWCSGL.OpenGL
 
         [DllImport("kernel32.dll")]
         private static extern nint GetProcAddress(nint module, [MarshalAs(UnmanagedType.LPStr)] string procName);
-        
+
         [DllImport("kernel32.dll")]
         private static extern nint LoadLibraryA([MarshalAs(UnmanagedType.LPStr)] string lib);
 

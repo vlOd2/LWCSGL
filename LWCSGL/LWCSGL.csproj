@@ -28,4 +28,10 @@
     <DebugType>full</DebugType>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Update="OpenAL.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
