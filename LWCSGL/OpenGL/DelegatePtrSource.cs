@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 
 namespace LWCSGL.OpenGL 
 {
-    internal class GLPtrSource : IDisposable
+    internal class DelegatePtrSource : IDisposable
     {
         private const string LIBRARY_NAME = "opengl32.dll";
 

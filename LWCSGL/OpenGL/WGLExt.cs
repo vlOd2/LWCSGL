@@ -14,7 +14,7 @@ namespace LWCSGL.OpenGL
         public static bool wglSwapInterval(int interval) { return _wglSwapInterval(interval); }
         public static int wglGetSwapInterval() { return _wglGetSwapInterval(); }
 
-        internal static void Load(GLPtrSource src)
+        internal static void Load(DelegatePtrSource src)
         {
             _wglSwapInterval = (delegate* unmanaged[Stdcall]<int, bool>)src.GetFuncPtr("wglSwapIntervalEXT");
             _wglGetSwapInterval = (delegate* unmanaged[Stdcall]<int>)src.GetFuncPtr("wglGetSwapIntervalEXT");

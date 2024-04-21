@@ -54,7 +54,7 @@ namespace LWCSGL.OpenGL
         public static nint glMapBufferARB(uint target, uint access) { return _glMapBufferARB(target, access); }
         public static bool glUnmapBufferARB(uint target) { return _glUnmapBufferARB(target); }
 
-        internal static void Load(GLPtrSource src)
+        internal static void Load(DelegatePtrSource src)
         {
             _glBeginQueryARB = (delegate* unmanaged[Stdcall]<uint, uint, void>)src.GetFuncPtr("glBeginQueryARB");
             _glBindBufferARB = (delegate* unmanaged[Stdcall]<uint, uint, void>)src.GetFuncPtr("glBindBufferARB");

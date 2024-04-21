@@ -24,7 +24,7 @@ namespace LWCSGL.OpenGL
         public static void glTexImage3D(uint target, int level, int internalformat, int width, int height, int depth, int border, uint format, uint type, nint pixels) { _glTexImage3D(target, level, internalformat, width, height, depth, border, format, type, (void*)pixels); }
         public static void glTexSubImage3D(uint target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, uint format, uint type, nint pixels) { _glTexSubImage3D(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, (void*)pixels); }
         
-        internal static void Load(GLPtrSource src)
+        internal static void Load(DelegatePtrSource src)
         {
             _glCopyTexSubImage3D = (delegate* unmanaged[Stdcall]<uint, int, int, int, int, int, int, int, int, void>)src.GetFuncPtr("glCopyTexSubImage3D");
             _glDrawRangeElements = (delegate* unmanaged[Stdcall]<uint, uint, uint, int, uint, void*, void>)src.GetFuncPtr("glDrawRangeElements");

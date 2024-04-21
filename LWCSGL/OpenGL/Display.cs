@@ -27,7 +27,7 @@ namespace LWCSGL.OpenGL
         private bool closeRequested;
         private bool wasResized;
         private bool doNotCancelCloseEvent;
-        private GLPtrSource ptrSource;
+        private DelegatePtrSource ptrSource;
         private HashSet<string> supportedExt = new HashSet<string>();
         private bool supportsSwapControl;
 
@@ -292,7 +292,7 @@ namespace LWCSGL.OpenGL
             };
             form.Show();
 
-            ptrSource = new GLPtrSource();
+            ptrSource = new DelegatePtrSource();
             GL12.Load(ptrSource);
             GLARB.Load(ptrSource);
             WGLExt.Load(ptrSource);
