@@ -29,9 +29,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="OpenAL.dll">
+    <Content Include="OpenAL.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+      <PackagePath>runtimes/win-x64/native/</PackagePath>
+      <Pack>true</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>
