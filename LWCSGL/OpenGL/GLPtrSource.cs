@@ -10,12 +10,12 @@ namespace LWCSGL.OpenGL
 {
     internal class GLPtrSource : IDisposable
     {
-        private const string LIBRARY_NAME = "OpenGL32.dll";
+        private const string LIBRARY_NAME = "opengl32.dll";
 
-        [DllImport("KERNEL32.DLL")]
+        [DllImport("kernel32.dll")]
         private static extern nint GetProcAddress(nint module, [MarshalAs(UnmanagedType.LPStr)] string procName);
         
-        [DllImport("KERNEL32.DLL")]
+        [DllImport("kernel32.dll")]
         private static extern nint LoadLibraryA([MarshalAs(UnmanagedType.LPStr)] string lib);
 
         [DllImport("kernel32.dll")]

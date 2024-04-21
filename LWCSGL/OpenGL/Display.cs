@@ -29,6 +29,7 @@ namespace LWCSGL.OpenGL
         private bool doNotCancelCloseEvent;
         private GLPtrSource ptrSource;
         private HashSet<string> supportedExt = new HashSet<string>();
+        private bool supportsSwapControl;
 
         private static void DoPlatformCheck()
         {
@@ -291,14 +292,18 @@ namespace LWCSGL.OpenGL
             };
             form.Show();
 
+            ptrSource = new GLPtrSource();
+            GL12.Load(ptrSource);
+            GLARB.Load(ptrSource);
+            WGLExt.Load(ptrSource);
+
             supportedExt.Clear();
             string[] extensions = GLU.GetGLString(GL11C.GL_EXTENSIONS).Split(
                 new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             foreach (string ext in extensions) supportedExt.Add(ext.Trim());
 
-            ptrSource = new GLPtrSource();
-            GL12.Load(ptrSource);
-            GLARB.Load(ptrSource);
+            supportsSwapControl = supportedExt.Contains("WGL_EXT_swap_control");
+            SetVSyncEnabled(false);
         }
 
         /// <summary>
@@ -319,6 +324,7 @@ namespace LWCSGL.OpenGL
             CheckForDisplay();
             GL12.Unload();
             GLARB.Unload();
+            WGLExt.Unload();
             instance.doNotCancelCloseEvent = true;
             instance.viewport.Dispose();
             instance.form.Close();
@@ -366,8 +372,8 @@ namespace LWCSGL.OpenGL
             if (Mouse.instance != null && updateWin)
                 Mouse.Poll();
 
-            SwapBuffers();
             viewport.Invalidate();
+            SwapBuffers();
         }
 
         /// <summary>
@@ -411,6 +417,24 @@ namespace LWCSGL.OpenGL
                 GetFormSafely().Location = new Point(nx, ny);
             else
                 CenterWindow();
+        }
+
+        /// <summary>
+        /// Enable or disable vertical monitor synchronization<para></para>
+        /// This may not work on all computers
+        /// </summary>
+        /// <param name="sync">the v-sync state</param>
+        public static void SetVSyncEnabled(bool sync) => SetSwapInterval(sync ? 1 : 0);
+
+        /// <summary>
+        /// Sets the swapping interval<para></para>
+        /// This may not work on all computers
+        /// </summary>
+        /// <param name="interval">the interval to set</param>
+        public static void SetSwapInterval(int interval)
+        {
+            if (!instance.supportsSwapControl) return;
+            WGLExt.wglSwapInterval(interval);
         }
 
         /// <summary>

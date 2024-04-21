@@ -91,6 +91,9 @@ namespace LWCSGL
             SetupGL();
             SetupTexture();
 
+            int frames = 0;
+            long frameTime = TimeUtil.MilliTime;
+
             while (!Display.IsCloseRequested())
             {
                 while (Keyboard.Next()) 
@@ -109,7 +112,7 @@ namespace LWCSGL
 
                     string state = Keyboard.IsRepeatEvent() ? "Holding" : 
                         Keyboard.GetEventKeyState() ? "Pressed" : "Released";
-                    Console.WriteLine($"{state} key {Keyboard.GetEventKey()}");
+                    Console.WriteLine($"{state} key {Keyboard.GetEventKey()} ({Keyboard.GetEventCharacter()})");
                 }
 
                 while (Mouse.Next()) 
@@ -127,7 +130,14 @@ namespace LWCSGL
                 DrawTriangle();
 
                 Display.Update();
-                Thread.Sleep(1);
+                frames++;
+
+                if (TimeUtil.MilliTime - frameTime >= 1000) 
+                {
+                    Console.WriteLine($"Framerate: {frames}");
+                    frames = 0;
+                    frameTime = TimeUtil.MilliTime;
+                }
             }
 
             Display.Destroy();

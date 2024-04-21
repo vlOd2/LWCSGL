@@ -23,6 +23,7 @@ namespace LWCSGL.Input
         private float y;
         private float deltaX;
         private float deltaY;
+        private int deltaWheel;
         private bool grabbed;
         private MouseEventData currentEvent;
 
@@ -34,6 +35,7 @@ namespace LWCSGL.Input
             public float Y;
             public float DeltaX;
             public float DeltaY;
+            public float DeltaWheel;
 
             public override bool Equals(object obj)
             {
@@ -43,12 +45,13 @@ namespace LWCSGL.Input
                        X == data.X &&
                        Y == data.Y &&
                        DeltaX == data.DeltaX &&
-                       DeltaY == data.DeltaY;
+                       DeltaY == data.DeltaY &&
+                       DeltaWheel == data.DeltaWheel;
             }
 
             public override int GetHashCode()
             {
-                return HashCode.Combine(Button, State, X, Y, DeltaX, DeltaY);
+                return HashCode.Combine(Button, State, X, Y, DeltaX, DeltaY, DeltaWheel);
             }
 
             public static bool operator ==(MouseEventData left, MouseEventData right)
@@ -72,6 +75,7 @@ namespace LWCSGL.Input
             Display.CheckForDisplay();
             instance = new Mouse();
             instance.form = Display.instance.form;
+            Display.instance.viewport.MouseWheel += instance.Viewport_MouseWheel;
         }
 
         /// <summary>
@@ -79,7 +83,16 @@ namespace LWCSGL.Input
         /// </summary>
         public static void Destroy()
         {
+            Display.CheckForDisplay();
+            Display.instance.viewport.MouseWheel -= instance.Viewport_MouseWheel;
             instance = null;
+        }
+
+        private void Viewport_MouseWheel(object sender, MouseEventArgs e)
+        {
+            int delta = e.Delta / SystemInformation.MouseWheelScrollDelta;
+            deltaWheel += delta;
+            Console.WriteLine(deltaWheel);
         }
 
         private void GetCursorPos(out int x, out int y)
@@ -95,6 +108,7 @@ namespace LWCSGL.Input
                 int origY = form.Height / 2;
                 // Even heights need to be adjusted
                 if (form.Height % 2 == 0) origY -= 1;
+                // Make the coords relative to the center
                 x -= origX;
                 y -= origY;
             }
@@ -172,10 +186,14 @@ namespace LWCSGL.Input
                 }
             }
 
-            currentEvent.X = GetX();
-            currentEvent.Y = GetY();
-            currentEvent.DeltaX = GetDX();
-            currentEvent.DeltaY = GetDY();
+            if (hasEvent) 
+            {
+                currentEvent.X = GetX();
+                currentEvent.Y = GetY();
+                currentEvent.DeltaX = GetDX();
+                currentEvent.DeltaY = GetDY();
+                currentEvent.DeltaWheel = GetDWheel();
+            }
 
             return hasEvent;
         }
@@ -193,42 +211,47 @@ namespace LWCSGL.Input
         /// <summary>
         /// Gets the current event button
         /// </summary>
-        /// <returns>The event button, undefined when Next() returned false</returns>
+        /// <returns>the event button, undefined when Next() returned false</returns>
         public static int GetEventButton() => instance.currentEvent.Button;
         /// <summary>
         /// Checks if the specified button was the current event button
         /// </summary>
-        /// <returns>The check result, undefined when Next() returned false</returns>
+        /// <returns>the check result, undefined when Next() returned false</returns>
         public static bool GetEventButton(int button) => button == instance.currentEvent.Button;
         /// <summary>
         /// Gets the state of the event button
         /// </summary>
-        /// <returns>The state of the event button, undefined when Next() returned false</returns>
+        /// <returns>the state of the event button, undefined when Next() returned false</returns>
         public static bool GetEventButtonState() => instance.currentEvent.State;
         /// <summary>
         /// Gets the absoulute X position of the mouse of the current event
         /// </summary>
-        /// <returns>The X position of the mouse</returns>
+        /// <returns>the X position of the mouse</returns>
         public static float GetEventX() => instance.currentEvent.X;
         /// <summary>
         /// Gets the absoulute Y position of the mouse of the current event
         /// </summary>
-        /// <returns>The Y position of the mouse</returns>
+        /// <returns>the Y position of the mouse</returns>
         public static float GetEventY() => instance.currentEvent.Y;
         /// <summary>
         /// Gets the X delta of the current event
         /// </summary>
-        /// <returns>The X delta</returns>
+        /// <returns>the X delta</returns>
         public static float GetEventDX() => instance.currentEvent.DeltaX;
         /// <summary>
         /// Gets the Y delta of the current event
         /// </summary>
-        /// <returns>The Y delta</returns>
+        /// <returns>the Y delta</returns>
         public static float GetEventDY() => instance.currentEvent.DeltaY;
+        /// <summary>
+        /// Gets the wheel delta of the current event
+        /// </summary>
+        /// <returns>the wheel delta</returns>
+        public static float GetEventDWheel() => instance.currentEvent.DeltaWheel;
         /// <summary>
         /// Gets the absoulute X position of the mouse
         /// </summary>
-        /// <returns>The X position of the mouse</returns>
+        /// <returns>the X position of the mouse</returns>
         public static float GetX() => Math.Max(Math.Min(instance.x, instance.form.Width - 1), 0);
         /// <summary>
         /// Gets the absoulute Y position of the mouse
@@ -238,13 +261,23 @@ namespace LWCSGL.Input
         /// <summary>
         /// Gets the X delta of the mouse since the last poll
         /// </summary>
-        /// <returns>The X delta</returns>
+        /// <returns>the X delta</returns>
         public static float GetDX() => instance.deltaX;
         /// <summary>
         /// Gets the Y delta of the mouse since the last poll
         /// </summary>
-        /// <returns>The Y delta</returns>
+        /// <returns>the Y delta</returns>
         public static float GetDY() => instance.deltaY;
+        /// <summary>
+        /// Gets the delta of the mouse wheel since the last call
+        /// </summary>
+        /// <returns>the wheel delta</returns>
+        public static int GetDWheel() 
+        {
+            int delta = instance.deltaWheel;
+            instance.deltaWheel = 0;
+            return delta;
+        }
         /// <summary>
         /// Retreives the grab state
         /// </summary>

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using LWCSGL.OpenGL;
 
@@ -10,9 +9,6 @@ namespace LWCSGL.Input
     /// </summary>
     public class Keyboard
     {
-        [DllImport("user32.dll")]
-        private static extern int MapVirtualKeyA(int uCode, int uMapType);
-        private const int MAPVK_VK_TO_CHAR = 2;
         private static Keyboard instance;
         private Dictionary<VirtualKey, bool> pressedKeys;
         private Queue<KeyboardEvent> eventQueue;
@@ -40,8 +36,8 @@ namespace LWCSGL.Input
         {
             Display.CheckForDisplay();
             instance = new Keyboard();
-            Display.instance.viewport.KeyDown += instance.Form_KeyDown;
-            Display.instance.viewport.KeyUp += instance.Form_KeyUp;
+            Display.instance.viewport.KeyDown += instance.Viewport_KeyDown;
+            Display.instance.viewport.KeyUp += instance.Viewport_KeyUp;
         }
 
         /// <summary>
@@ -50,8 +46,8 @@ namespace LWCSGL.Input
         public static void Destroy()
         {
             Display.CheckForDisplay();
-            Display.instance.viewport.KeyDown -= instance.Form_KeyDown;
-            Display.instance.viewport.KeyUp -= instance.Form_KeyUp;
+            Display.instance.viewport.KeyDown -= instance.Viewport_KeyDown;
+            Display.instance.viewport.KeyUp -= instance.Viewport_KeyUp;
             instance = null;
         }
 
@@ -66,23 +62,18 @@ namespace LWCSGL.Input
             });
         }
 
-        private char Key2Char(int key)
-        {
-            return (char)MapVirtualKeyA(key, MAPVK_VK_TO_CHAR);
-        }
-
-        private void Form_KeyUp(object sender, KeyEventArgs e)
+        private void Viewport_KeyUp(object sender, KeyEventArgs e)
         {
             VirtualKey key = (VirtualKey)e.KeyCode;
 
             if (pressedKeys.ContainsKey(key))
             {
                 pressedKeys[key] = false;
-                QueueEvent(key, Key2Char(e.KeyValue), false, false);
+                QueueEvent(key, VKMapper.GetChar(key), false, false);
             }
         }
 
-        private void Form_KeyDown(object sender, KeyEventArgs e)
+        private void Viewport_KeyDown(object sender, KeyEventArgs e)
         {
             VirtualKey key = (VirtualKey)e.KeyCode;
 
@@ -93,13 +84,13 @@ namespace LWCSGL.Input
                 if (!alreadyPressed || repeatEvents)
                 {
                     pressedKeys[key] = true;
-                    QueueEvent(key, Key2Char(e.KeyValue), true, alreadyPressed);
+                    QueueEvent(key, VKMapper.GetChar(key), true, alreadyPressed);
                 }
             }
             else
             {
                 pressedKeys.Add(key, true);
-                QueueEvent(key, Key2Char(e.KeyValue), true, false);
+                QueueEvent(key, VKMapper.GetChar(key), true, false);
             }
         }
 
@@ -165,7 +156,7 @@ namespace LWCSGL.Input
         /// <returns>the friendly name</returns>
         public static string GetKeyName(VirtualKey vk)
         {
-            return vk.ToString();
+            return VKMapper.GetFriendlyName(vk);
         }
 
         /// <summary>
