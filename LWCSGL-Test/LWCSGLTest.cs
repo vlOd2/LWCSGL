@@ -120,7 +120,7 @@ namespace LWCSGL
                     string state = Mouse.GetEventButtonState() ? "Pressed" : "Released";
                     Console.WriteLine($"{state} mouse button {Mouse.GetEventButton()} @ " +
                         $"{Mouse.GetEventX()}, {Mouse.GetEventY()} with delta " +
-                        $"{Mouse.GetEventDX()}, {Mouse.GetEventDY()}");
+                        $"{Mouse.GetEventDX()}, {Mouse.GetEventDY()} with wheel {Mouse.GetEventDWheel()}");
                 }
 
                 if (Display.WasResized())

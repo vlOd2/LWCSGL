@@ -25,7 +25,8 @@ namespace LWCSGL.Input
         private float deltaY;
         private int deltaWheel;
         private bool grabbed;
-        private MouseEventData currentEvent;
+        private MouseEventData mEvent = new MouseEventData();
+        private MouseEventData mWheelRestoreEvent = new MouseEventData();
 
         private struct MouseEventData
         {
@@ -35,34 +36,9 @@ namespace LWCSGL.Input
             public float Y;
             public float DeltaX;
             public float DeltaY;
-            public float DeltaWheel;
-
-            public override bool Equals(object obj)
-            {
-                return obj is MouseEventData data &&
-                       Button == data.Button &&
-                       State == data.State &&
-                       X == data.X &&
-                       Y == data.Y &&
-                       DeltaX == data.DeltaX &&
-                       DeltaY == data.DeltaY &&
-                       DeltaWheel == data.DeltaWheel;
-            }
-
-            public override int GetHashCode()
-            {
-                return HashCode.Combine(Button, State, X, Y, DeltaX, DeltaY, DeltaWheel);
-            }
-
-            public static bool operator ==(MouseEventData left, MouseEventData right)
-            {
-                return left.Equals(right);
-            }
-
-            public static bool operator !=(MouseEventData left, MouseEventData right)
-            {
-                return !(left == right);
-            }
+            public int DeltaWheel;
+            public bool DeltaWheelChanged;
+            public bool IsRestore;
         }
 
         private Mouse() { }
@@ -91,8 +67,9 @@ namespace LWCSGL.Input
         private void Viewport_MouseWheel(object sender, MouseEventArgs e)
         {
             int delta = e.Delta / SystemInformation.MouseWheelScrollDelta;
-            deltaWheel += delta;
-            Console.WriteLine(deltaWheel);
+            deltaWheel = delta;
+            mEvent.DeltaWheel = delta;
+            mEvent.DeltaWheelChanged = true;
         }
 
         private void GetCursorPos(out int x, out int y)
@@ -156,31 +133,38 @@ namespace LWCSGL.Input
             bool leftButton = GetAsyncKeyState((int)Keys.LButton) != 0;
             bool rightButton = GetAsyncKeyState((int)Keys.RButton) != 0;
 
-            if (currentEvent.Button != BUTTON_NONE && !currentEvent.State)
-                currentEvent.Button = BUTTON_NONE;
-            else if (currentEvent.Button == BUTTON_NONE)
+            if (mWheelRestoreEvent.IsRestore) 
             {
-                if (rightButton) currentEvent.Button = BUTTON_RIGHT;
-                if (leftButton) currentEvent.Button = BUTTON_LEFT;
-                currentEvent.State = leftButton || rightButton;
-                hasEvent = currentEvent.Button != BUTTON_NONE;
+                mEvent = mWheelRestoreEvent;
+                mEvent.IsRestore = false;
+                mWheelRestoreEvent = new MouseEventData();
             }
-            else if (currentEvent.Button != BUTTON_NONE && currentEvent.State)
+
+            if (mEvent.Button != BUTTON_NONE && !mEvent.State)
+                mEvent.Button = BUTTON_NONE;
+            else if (mEvent.Button == BUTTON_NONE)
             {
-                switch (currentEvent.Button)
+                if (rightButton) mEvent.Button = BUTTON_RIGHT;
+                if (leftButton) mEvent.Button = BUTTON_LEFT;
+                mEvent.State = leftButton || rightButton;
+                hasEvent = mEvent.Button != BUTTON_NONE;
+            }
+            else if (mEvent.Button != BUTTON_NONE && mEvent.State)
+            {
+                switch (mEvent.Button)
                 {
                     case BUTTON_LEFT:
                         if (!leftButton)
                         {
                             hasEvent = true;
-                            currentEvent.State = false;
+                            mEvent.State = false;
                         }
                         break;
                     case BUTTON_RIGHT:
                         if (!rightButton)
                         {
                             hasEvent = true;
-                            currentEvent.State = false;
+                            mEvent.State = false;
                         }
                         break;
                 }
@@ -188,11 +172,24 @@ namespace LWCSGL.Input
 
             if (hasEvent) 
             {
-                currentEvent.X = GetX();
-                currentEvent.Y = GetY();
-                currentEvent.DeltaX = GetDX();
-                currentEvent.DeltaY = GetDY();
-                currentEvent.DeltaWheel = GetDWheel();
+                mEvent.X = GetX();
+                mEvent.Y = GetY();
+                mEvent.DeltaX = GetDX();
+                mEvent.DeltaY = GetDY();
+            }
+
+            if (!hasEvent && mEvent.DeltaWheelChanged)
+            {
+                mEvent.DeltaWheelChanged = false;
+                mWheelRestoreEvent = mEvent;
+                mWheelRestoreEvent.DeltaWheel = 0;
+                mWheelRestoreEvent.IsRestore = true;
+                mEvent.Button = BUTTON_NONE;
+                mEvent.X = 0;
+                mEvent.Y = 0;
+                mEvent.DeltaX = 0;
+                mEvent.DeltaY = 0;
+                hasEvent = true;
             }
 
             return hasEvent;
@@ -212,42 +209,48 @@ namespace LWCSGL.Input
         /// Gets the current event button
         /// </summary>
         /// <returns>the event button, undefined when Next() returned false</returns>
-        public static int GetEventButton() => instance.currentEvent.Button;
+        public static int GetEventButton() => instance.mEvent.Button;
         /// <summary>
         /// Checks if the specified button was the current event button
         /// </summary>
         /// <returns>the check result, undefined when Next() returned false</returns>
-        public static bool GetEventButton(int button) => button == instance.currentEvent.Button;
+        public static bool GetEventButton(int button) => button == instance.mEvent.Button;
         /// <summary>
         /// Gets the state of the event button
         /// </summary>
         /// <returns>the state of the event button, undefined when Next() returned false</returns>
-        public static bool GetEventButtonState() => instance.currentEvent.State;
+        public static bool GetEventButtonState() => instance.mEvent.State;
         /// <summary>
         /// Gets the absoulute X position of the mouse of the current event
         /// </summary>
         /// <returns>the X position of the mouse</returns>
-        public static float GetEventX() => instance.currentEvent.X;
+        public static float GetEventX() => instance.mEvent.X;
         /// <summary>
         /// Gets the absoulute Y position of the mouse of the current event
         /// </summary>
         /// <returns>the Y position of the mouse</returns>
-        public static float GetEventY() => instance.currentEvent.Y;
+        public static float GetEventY() => instance.mEvent.Y;
         /// <summary>
         /// Gets the X delta of the current event
         /// </summary>
         /// <returns>the X delta</returns>
-        public static float GetEventDX() => instance.currentEvent.DeltaX;
+        public static float GetEventDX() => instance.mEvent.DeltaX;
         /// <summary>
         /// Gets the Y delta of the current event
         /// </summary>
         /// <returns>the Y delta</returns>
-        public static float GetEventDY() => instance.currentEvent.DeltaY;
+        public static float GetEventDY() => instance.mEvent.DeltaY;
         /// <summary>
         /// Gets the wheel delta of the current event
         /// </summary>
         /// <returns>the wheel delta</returns>
-        public static float GetEventDWheel() => instance.currentEvent.DeltaWheel;
+        public static int GetEventDWheel() 
+        {
+            int delta = instance.mEvent.DeltaWheel;
+            instance.mEvent.DeltaWheel = 0;
+            instance.mEvent.DeltaWheelChanged = false;
+            return delta;
+        }
         /// <summary>
         /// Gets the absoulute X position of the mouse
         /// </summary>
