@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
+// TODO: Add documentation
 #pragma warning disable 1591
 
 namespace LWCSGL.OpenGL
@@ -233,6 +234,18 @@ namespace LWCSGL.OpenGL
         #endregion
 
         #region Methods (pointers)
+        [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void* alGetString2(int param);
+
+        [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void alGetBooleanv(int param, void* values);
+
+        [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void* alGetProcAddress2([In()][MarshalAs(UnmanagedType.LPStr)] string fname);
+
+        [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
+        public static extern void alBufferData(uint buffer, int format, void* data, int size, int samplerate);
+
         [DllImport(DLL_NAME, CallingConvention = CallingConvention.Cdecl)]
         public static extern void alGetIntegerv(int param, int* values);
 

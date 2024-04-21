@@ -94,6 +94,7 @@ namespace LWCSGL
             int frames = 0;
             long frameTime = TimeUtil.MilliTime;
 
+
             while (!Display.IsCloseRequested())
             {
                 while (Keyboard.Next()) 
