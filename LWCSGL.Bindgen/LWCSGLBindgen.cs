@@ -27,7 +27,7 @@
         static void Main(string[] args)
         {
             BindingsGenerator gen = new BindingsGenerator("gl.xml");
-            gen.GenerateAPI(TARGET_FEATURES[0..1], [], "1.1");
+            gen.GenerateAPI(TARGET_FEATURES[0..2], [], "1.1");
             gen.GenerateAPI([TARGET_FEATURES[2]], [], "1.2");
             gen.GenerateAPI([TARGET_FEATURES[3]], [], "1.3");
             gen.GenerateAPI([TARGET_FEATURES[4]], [], "1.4");

@@ -9,7 +9,10 @@ namespace LWCSGL.OpenGL
     {
         private static delegate* unmanaged[Stdcall]<uint, float, void> _glAccum;
         private static delegate* unmanaged[Stdcall]<uint, float, void> _glAlphaFunc;
+        private static delegate* unmanaged[Stdcall]<int, uint[], bool[], bool> _glAreTexturesResident;
+        private static delegate* unmanaged[Stdcall]<int, void> _glArrayElement;
         private static delegate* unmanaged[Stdcall]<uint, void> _glBegin;
+        private static delegate* unmanaged[Stdcall]<uint, uint, void> _glBindTexture;
         private static delegate* unmanaged[Stdcall]<int, int, float, float, float, float, byte[], void> _glBitmap;
         private static delegate* unmanaged[Stdcall]<uint, uint, void> _glBlendFunc;
         private static delegate* unmanaged[Stdcall]<uint, void> _glCallList;
@@ -55,18 +58,29 @@ namespace LWCSGL.OpenGL
         private static delegate* unmanaged[Stdcall]<ushort[], void> _glColor4usv;
         private static delegate* unmanaged[Stdcall]<bool, bool, bool, bool, void> _glColorMask;
         private static delegate* unmanaged[Stdcall]<uint, uint, void> _glColorMaterial;
+        private static delegate* unmanaged[Stdcall]<int, uint, int, nint, void> _glColorPointer;
         private static delegate* unmanaged[Stdcall]<int, int, int, int, uint, void> _glCopyPixels;
+        private static delegate* unmanaged[Stdcall]<uint, int, uint, int, int, int, int, void> _glCopyTexImage1D;
+        private static delegate* unmanaged[Stdcall]<uint, int, uint, int, int, int, int, int, void> _glCopyTexImage2D;
+        private static delegate* unmanaged[Stdcall]<uint, int, int, int, int, int, void> _glCopyTexSubImage1D;
+        private static delegate* unmanaged[Stdcall]<uint, int, int, int, int, int, int, int, void> _glCopyTexSubImage2D;
         private static delegate* unmanaged[Stdcall]<uint, void> _glCullFace;
         private static delegate* unmanaged[Stdcall]<uint, int, void> _glDeleteLists;
+        private static delegate* unmanaged[Stdcall]<int, uint[], void> _glDeleteTextures;
         private static delegate* unmanaged[Stdcall]<uint, void> _glDepthFunc;
         private static delegate* unmanaged[Stdcall]<bool, void> _glDepthMask;
         private static delegate* unmanaged[Stdcall]<double, double, void> _glDepthRange;
         private static delegate* unmanaged[Stdcall]<uint, void> _glDisable;
+        private static delegate* unmanaged[Stdcall]<uint, void> _glDisableClientState;
+        private static delegate* unmanaged[Stdcall]<uint, int, int, void> _glDrawArrays;
         private static delegate* unmanaged[Stdcall]<uint, void> _glDrawBuffer;
+        private static delegate* unmanaged[Stdcall]<uint, int, uint, nint, void> _glDrawElements;
         private static delegate* unmanaged[Stdcall]<int, int, uint, uint, nint, void> _glDrawPixels;
         private static delegate* unmanaged[Stdcall]<bool, void> _glEdgeFlag;
+        private static delegate* unmanaged[Stdcall]<int, nint, void> _glEdgeFlagPointer;
         private static delegate* unmanaged[Stdcall]<bool[], void> _glEdgeFlagv;
         private static delegate* unmanaged[Stdcall]<uint, void> _glEnable;
+        private static delegate* unmanaged[Stdcall]<uint, void> _glEnableClientState;
         private static delegate* unmanaged[Stdcall]<void> _glEnd;
         private static delegate* unmanaged[Stdcall]<void> _glEndList;
         private static delegate* unmanaged[Stdcall]<double, void> _glEvalCoord1d;
@@ -91,6 +105,7 @@ namespace LWCSGL.OpenGL
         private static delegate* unmanaged[Stdcall]<uint, void> _glFrontFace;
         private static delegate* unmanaged[Stdcall]<double, double, double, double, double, double, void> _glFrustum;
         private static delegate* unmanaged[Stdcall]<int, uint> _glGenLists;
+        private static delegate* unmanaged[Stdcall]<int, uint[], void> _glGenTextures;
         private static delegate* unmanaged[Stdcall]<uint, bool[], void> _glGetBooleanv;
         private static delegate* unmanaged[Stdcall]<uint, double[], void> _glGetClipPlane;
         private static delegate* unmanaged[Stdcall]<uint, double[], void> _glGetDoublev;
@@ -107,6 +122,7 @@ namespace LWCSGL.OpenGL
         private static delegate* unmanaged[Stdcall]<uint, float[], void> _glGetPixelMapfv;
         private static delegate* unmanaged[Stdcall]<uint, uint[], void> _glGetPixelMapuiv;
         private static delegate* unmanaged[Stdcall]<uint, ushort[], void> _glGetPixelMapusv;
+        private static delegate* unmanaged[Stdcall]<uint, nint, void> _glGetPointerv;
         private static delegate* unmanaged[Stdcall]<byte[], void> _glGetPolygonStipple;
         private static delegate* unmanaged[Stdcall]<uint, nint> _glGetString;
         private static delegate* unmanaged[Stdcall]<uint, uint, float[], void> _glGetTexEnvfv;
@@ -121,6 +137,7 @@ namespace LWCSGL.OpenGL
         private static delegate* unmanaged[Stdcall]<uint, uint, int[], void> _glGetTexParameteriv;
         private static delegate* unmanaged[Stdcall]<uint, uint, void> _glHint;
         private static delegate* unmanaged[Stdcall]<uint, void> _glIndexMask;
+        private static delegate* unmanaged[Stdcall]<uint, int, nint, void> _glIndexPointer;
         private static delegate* unmanaged[Stdcall]<double, void> _glIndexd;
         private static delegate* unmanaged[Stdcall]<double[], void> _glIndexdv;
         private static delegate* unmanaged[Stdcall]<float, void> _glIndexf;
@@ -129,9 +146,13 @@ namespace LWCSGL.OpenGL
         private static delegate* unmanaged[Stdcall]<int[], void> _glIndexiv;
         private static delegate* unmanaged[Stdcall]<short, void> _glIndexs;
         private static delegate* unmanaged[Stdcall]<short[], void> _glIndexsv;
+        private static delegate* unmanaged[Stdcall]<byte, void> _glIndexub;
+        private static delegate* unmanaged[Stdcall]<byte[], void> _glIndexubv;
         private static delegate* unmanaged[Stdcall]<void> _glInitNames;
+        private static delegate* unmanaged[Stdcall]<uint, int, nint, void> _glInterleavedArrays;
         private static delegate* unmanaged[Stdcall]<uint, bool> _glIsEnabled;
         private static delegate* unmanaged[Stdcall]<uint, bool> _glIsList;
+        private static delegate* unmanaged[Stdcall]<uint, bool> _glIsTexture;
         private static delegate* unmanaged[Stdcall]<uint, float, void> _glLightModelf;
         private static delegate* unmanaged[Stdcall]<uint, float[], void> _glLightModelfv;
         private static delegate* unmanaged[Stdcall]<uint, int, void> _glLightModeli;
@@ -174,6 +195,7 @@ namespace LWCSGL.OpenGL
         private static delegate* unmanaged[Stdcall]<int[], void> _glNormal3iv;
         private static delegate* unmanaged[Stdcall]<short, short, short, void> _glNormal3s;
         private static delegate* unmanaged[Stdcall]<short[], void> _glNormal3sv;
+        private static delegate* unmanaged[Stdcall]<uint, int, nint, void> _glNormalPointer;
         private static delegate* unmanaged[Stdcall]<double, double, double, double, double, double, void> _glOrtho;
         private static delegate* unmanaged[Stdcall]<float, void> _glPassThrough;
         private static delegate* unmanaged[Stdcall]<uint, int, float[], void> _glPixelMapfv;
@@ -186,11 +208,15 @@ namespace LWCSGL.OpenGL
         private static delegate* unmanaged[Stdcall]<float, float, void> _glPixelZoom;
         private static delegate* unmanaged[Stdcall]<float, void> _glPointSize;
         private static delegate* unmanaged[Stdcall]<uint, uint, void> _glPolygonMode;
+        private static delegate* unmanaged[Stdcall]<float, float, void> _glPolygonOffset;
         private static delegate* unmanaged[Stdcall]<byte[], void> _glPolygonStipple;
         private static delegate* unmanaged[Stdcall]<void> _glPopAttrib;
+        private static delegate* unmanaged[Stdcall]<void> _glPopClientAttrib;
         private static delegate* unmanaged[Stdcall]<void> _glPopMatrix;
         private static delegate* unmanaged[Stdcall]<void> _glPopName;
+        private static delegate* unmanaged[Stdcall]<int, uint[], float[], void> _glPrioritizeTextures;
         private static delegate* unmanaged[Stdcall]<uint, void> _glPushAttrib;
+        private static delegate* unmanaged[Stdcall]<uint, void> _glPushClientAttrib;
         private static delegate* unmanaged[Stdcall]<void> _glPushMatrix;
         private static delegate* unmanaged[Stdcall]<uint, void> _glPushName;
         private static delegate* unmanaged[Stdcall]<double, double, void> _glRasterPos2d;
@@ -270,6 +296,7 @@ namespace LWCSGL.OpenGL
         private static delegate* unmanaged[Stdcall]<int[], void> _glTexCoord4iv;
         private static delegate* unmanaged[Stdcall]<short, short, short, short, void> _glTexCoord4s;
         private static delegate* unmanaged[Stdcall]<short[], void> _glTexCoord4sv;
+        private static delegate* unmanaged[Stdcall]<int, uint, int, nint, void> _glTexCoordPointer;
         private static delegate* unmanaged[Stdcall]<uint, uint, float, void> _glTexEnvf;
         private static delegate* unmanaged[Stdcall]<uint, uint, float[], void> _glTexEnvfv;
         private static delegate* unmanaged[Stdcall]<uint, uint, int, void> _glTexEnvi;
@@ -286,6 +313,8 @@ namespace LWCSGL.OpenGL
         private static delegate* unmanaged[Stdcall]<uint, uint, float[], void> _glTexParameterfv;
         private static delegate* unmanaged[Stdcall]<uint, uint, int, void> _glTexParameteri;
         private static delegate* unmanaged[Stdcall]<uint, uint, int[], void> _glTexParameteriv;
+        private static delegate* unmanaged[Stdcall]<uint, int, int, int, uint, uint, nint, void> _glTexSubImage1D;
+        private static delegate* unmanaged[Stdcall]<uint, int, int, int, int, int, uint, uint, nint, void> _glTexSubImage2D;
         private static delegate* unmanaged[Stdcall]<double, double, double, void> _glTranslated;
         private static delegate* unmanaged[Stdcall]<float, float, float, void> _glTranslatef;
         private static delegate* unmanaged[Stdcall]<double, double, void> _glVertex2d;
@@ -312,11 +341,15 @@ namespace LWCSGL.OpenGL
         private static delegate* unmanaged[Stdcall]<int[], void> _glVertex4iv;
         private static delegate* unmanaged[Stdcall]<short, short, short, short, void> _glVertex4s;
         private static delegate* unmanaged[Stdcall]<short[], void> _glVertex4sv;
+        private static delegate* unmanaged[Stdcall]<int, uint, int, nint, void> _glVertexPointer;
         private static delegate* unmanaged[Stdcall]<int, int, int, int, void> _glViewport;
 
         public static void glAccum(uint op, float value) { _glAccum(op, value); }
         public static void glAlphaFunc(uint func, float @ref) { _glAlphaFunc(func, @ref); }
+        public static bool glAreTexturesResident(int n, uint[] textures, bool[] residences) { return _glAreTexturesResident(n, textures, residences); }
+        public static void glArrayElement(int i) { _glArrayElement(i); }
         public static void glBegin(uint mode) { _glBegin(mode); }
+        public static void glBindTexture(uint target, uint texture) { _glBindTexture(target, texture); }
         public static void glBitmap(int width, int height, float xorig, float yorig, float xmove, float ymove, byte[] bitmap) { _glBitmap(width, height, xorig, yorig, xmove, ymove, bitmap); }
         public static void glBlendFunc(uint sfactor, uint dfactor) { _glBlendFunc(sfactor, dfactor); }
         public static void glCallList(uint list) { _glCallList(list); }
@@ -362,18 +395,29 @@ namespace LWCSGL.OpenGL
         public static void glColor4usv(ushort[] v) { _glColor4usv(v); }
         public static void glColorMask(bool red, bool green, bool blue, bool alpha) { _glColorMask(red, green, blue, alpha); }
         public static void glColorMaterial(uint face, uint mode) { _glColorMaterial(face, mode); }
+        public static void glColorPointer(int size, uint type, int stride, nint pointer) { _glColorPointer(size, type, stride, pointer); }
         public static void glCopyPixels(int x, int y, int width, int height, uint type) { _glCopyPixels(x, y, width, height, type); }
+        public static void glCopyTexImage1D(uint target, int level, uint internalformat, int x, int y, int width, int border) { _glCopyTexImage1D(target, level, internalformat, x, y, width, border); }
+        public static void glCopyTexImage2D(uint target, int level, uint internalformat, int x, int y, int width, int height, int border) { _glCopyTexImage2D(target, level, internalformat, x, y, width, height, border); }
+        public static void glCopyTexSubImage1D(uint target, int level, int xoffset, int x, int y, int width) { _glCopyTexSubImage1D(target, level, xoffset, x, y, width); }
+        public static void glCopyTexSubImage2D(uint target, int level, int xoffset, int yoffset, int x, int y, int width, int height) { _glCopyTexSubImage2D(target, level, xoffset, yoffset, x, y, width, height); }
         public static void glCullFace(uint mode) { _glCullFace(mode); }
         public static void glDeleteLists(uint list, int range) { _glDeleteLists(list, range); }
+        public static void glDeleteTextures(int n, uint[] textures) { _glDeleteTextures(n, textures); }
         public static void glDepthFunc(uint func) { _glDepthFunc(func); }
         public static void glDepthMask(bool flag) { _glDepthMask(flag); }
         public static void glDepthRange(double n, double f) { _glDepthRange(n, f); }
         public static void glDisable(uint cap) { _glDisable(cap); }
+        public static void glDisableClientState(uint array) { _glDisableClientState(array); }
+        public static void glDrawArrays(uint mode, int first, int count) { _glDrawArrays(mode, first, count); }
         public static void glDrawBuffer(uint buf) { _glDrawBuffer(buf); }
+        public static void glDrawElements(uint mode, int count, uint type, nint indices) { _glDrawElements(mode, count, type, indices); }
         public static void glDrawPixels(int width, int height, uint format, uint type, nint pixels) { _glDrawPixels(width, height, format, type, pixels); }
         public static void glEdgeFlag(bool flag) { _glEdgeFlag(flag); }
+        public static void glEdgeFlagPointer(int stride, nint pointer) { _glEdgeFlagPointer(stride, pointer); }
         public static void glEdgeFlagv(bool[] flag) { _glEdgeFlagv(flag); }
         public static void glEnable(uint cap) { _glEnable(cap); }
+        public static void glEnableClientState(uint array) { _glEnableClientState(array); }
         public static void glEnd() { _glEnd(); }
         public static void glEndList() { _glEndList(); }
         public static void glEvalCoord1d(double u) { _glEvalCoord1d(u); }
@@ -398,6 +442,7 @@ namespace LWCSGL.OpenGL
         public static void glFrontFace(uint mode) { _glFrontFace(mode); }
         public static void glFrustum(double left, double right, double bottom, double top, double zNear, double zFar) { _glFrustum(left, right, bottom, top, zNear, zFar); }
         public static uint glGenLists(int range) { return _glGenLists(range); }
+        public static void glGenTextures(int n, uint[] textures) { _glGenTextures(n, textures); }
         public static void glGetBooleanv(uint pname, bool[] data) { _glGetBooleanv(pname, data); }
         public static void glGetClipPlane(uint plane, double[] equation) { _glGetClipPlane(plane, equation); }
         public static void glGetDoublev(uint pname, double[] data) { _glGetDoublev(pname, data); }
@@ -414,6 +459,7 @@ namespace LWCSGL.OpenGL
         public static void glGetPixelMapfv(uint map, float[] values) { _glGetPixelMapfv(map, values); }
         public static void glGetPixelMapuiv(uint map, uint[] values) { _glGetPixelMapuiv(map, values); }
         public static void glGetPixelMapusv(uint map, ushort[] values) { _glGetPixelMapusv(map, values); }
+        public static void glGetPointerv(uint pname, nint @params) { _glGetPointerv(pname, @params); }
         public static void glGetPolygonStipple(byte[] mask) { _glGetPolygonStipple(mask); }
         public static nint glGetString(uint name) { return _glGetString(name); }
         public static void glGetTexEnvfv(uint target, uint pname, float[] @params) { _glGetTexEnvfv(target, pname, @params); }
@@ -428,6 +474,7 @@ namespace LWCSGL.OpenGL
         public static void glGetTexParameteriv(uint target, uint pname, int[] @params) { _glGetTexParameteriv(target, pname, @params); }
         public static void glHint(uint target, uint mode) { _glHint(target, mode); }
         public static void glIndexMask(uint mask) { _glIndexMask(mask); }
+        public static void glIndexPointer(uint type, int stride, nint pointer) { _glIndexPointer(type, stride, pointer); }
         public static void glIndexd(double c) { _glIndexd(c); }
         public static void glIndexdv(double[] c) { _glIndexdv(c); }
         public static void glIndexf(float c) { _glIndexf(c); }
@@ -436,9 +483,13 @@ namespace LWCSGL.OpenGL
         public static void glIndexiv(int[] c) { _glIndexiv(c); }
         public static void glIndexs(short c) { _glIndexs(c); }
         public static void glIndexsv(short[] c) { _glIndexsv(c); }
+        public static void glIndexub(byte c) { _glIndexub(c); }
+        public static void glIndexubv(byte[] c) { _glIndexubv(c); }
         public static void glInitNames() { _glInitNames(); }
+        public static void glInterleavedArrays(uint format, int stride, nint pointer) { _glInterleavedArrays(format, stride, pointer); }
         public static bool glIsEnabled(uint cap) { return _glIsEnabled(cap); }
         public static bool glIsList(uint list) { return _glIsList(list); }
+        public static bool glIsTexture(uint texture) { return _glIsTexture(texture); }
         public static void glLightModelf(uint pname, float param) { _glLightModelf(pname, param); }
         public static void glLightModelfv(uint pname, float[] @params) { _glLightModelfv(pname, @params); }
         public static void glLightModeli(uint pname, int param) { _glLightModeli(pname, param); }
@@ -481,6 +532,7 @@ namespace LWCSGL.OpenGL
         public static void glNormal3iv(int[] v) { _glNormal3iv(v); }
         public static void glNormal3s(short nx, short ny, short nz) { _glNormal3s(nx, ny, nz); }
         public static void glNormal3sv(short[] v) { _glNormal3sv(v); }
+        public static void glNormalPointer(uint type, int stride, nint pointer) { _glNormalPointer(type, stride, pointer); }
         public static void glOrtho(double left, double right, double bottom, double top, double zNear, double zFar) { _glOrtho(left, right, bottom, top, zNear, zFar); }
         public static void glPassThrough(float token) { _glPassThrough(token); }
         public static void glPixelMapfv(uint map, int mapsize, float[] values) { _glPixelMapfv(map, mapsize, values); }
@@ -493,11 +545,15 @@ namespace LWCSGL.OpenGL
         public static void glPixelZoom(float xfactor, float yfactor) { _glPixelZoom(xfactor, yfactor); }
         public static void glPointSize(float size) { _glPointSize(size); }
         public static void glPolygonMode(uint face, uint mode) { _glPolygonMode(face, mode); }
+        public static void glPolygonOffset(float factor, float units) { _glPolygonOffset(factor, units); }
         public static void glPolygonStipple(byte[] mask) { _glPolygonStipple(mask); }
         public static void glPopAttrib() { _glPopAttrib(); }
+        public static void glPopClientAttrib() { _glPopClientAttrib(); }
         public static void glPopMatrix() { _glPopMatrix(); }
         public static void glPopName() { _glPopName(); }
+        public static void glPrioritizeTextures(int n, uint[] textures, float[] priorities) { _glPrioritizeTextures(n, textures, priorities); }
         public static void glPushAttrib(uint mask) { _glPushAttrib(mask); }
+        public static void glPushClientAttrib(uint mask) { _glPushClientAttrib(mask); }
         public static void glPushMatrix() { _glPushMatrix(); }
         public static void glPushName(uint name) { _glPushName(name); }
         public static void glRasterPos2d(double x, double y) { _glRasterPos2d(x, y); }
@@ -577,6 +633,7 @@ namespace LWCSGL.OpenGL
         public static void glTexCoord4iv(int[] v) { _glTexCoord4iv(v); }
         public static void glTexCoord4s(short s, short t, short r, short q) { _glTexCoord4s(s, t, r, q); }
         public static void glTexCoord4sv(short[] v) { _glTexCoord4sv(v); }
+        public static void glTexCoordPointer(int size, uint type, int stride, nint pointer) { _glTexCoordPointer(size, type, stride, pointer); }
         public static void glTexEnvf(uint target, uint pname, float param) { _glTexEnvf(target, pname, param); }
         public static void glTexEnvfv(uint target, uint pname, float[] @params) { _glTexEnvfv(target, pname, @params); }
         public static void glTexEnvi(uint target, uint pname, int param) { _glTexEnvi(target, pname, param); }
@@ -593,6 +650,8 @@ namespace LWCSGL.OpenGL
         public static void glTexParameterfv(uint target, uint pname, float[] @params) { _glTexParameterfv(target, pname, @params); }
         public static void glTexParameteri(uint target, uint pname, int param) { _glTexParameteri(target, pname, param); }
         public static void glTexParameteriv(uint target, uint pname, int[] @params) { _glTexParameteriv(target, pname, @params); }
+        public static void glTexSubImage1D(uint target, int level, int xoffset, int width, uint format, uint type, nint pixels) { _glTexSubImage1D(target, level, xoffset, width, format, type, pixels); }
+        public static void glTexSubImage2D(uint target, int level, int xoffset, int yoffset, int width, int height, uint format, uint type, nint pixels) { _glTexSubImage2D(target, level, xoffset, yoffset, width, height, format, type, pixels); }
         public static void glTranslated(double x, double y, double z) { _glTranslated(x, y, z); }
         public static void glTranslatef(float x, float y, float z) { _glTranslatef(x, y, z); }
         public static void glVertex2d(double x, double y) { _glVertex2d(x, y); }
@@ -619,13 +678,17 @@ namespace LWCSGL.OpenGL
         public static void glVertex4iv(int[] v) { _glVertex4iv(v); }
         public static void glVertex4s(short x, short y, short z, short w) { _glVertex4s(x, y, z, w); }
         public static void glVertex4sv(short[] v) { _glVertex4sv(v); }
+        public static void glVertexPointer(int size, uint type, int stride, nint pointer) { _glVertexPointer(size, type, stride, pointer); }
         public static void glViewport(int x, int y, int width, int height) { _glViewport(x, y, width, height); }
 
         internal static void Load(DelegatePtrSource src)
         {
             _glAccum = (delegate* unmanaged[Stdcall]<uint, float, void>)src.GetFuncPtr("glAccum");
             _glAlphaFunc = (delegate* unmanaged[Stdcall]<uint, float, void>)src.GetFuncPtr("glAlphaFunc");
+            _glAreTexturesResident = (delegate* unmanaged[Stdcall]<int, uint[], bool[], bool>)src.GetFuncPtr("glAreTexturesResident");
+            _glArrayElement = (delegate* unmanaged[Stdcall]<int, void>)src.GetFuncPtr("glArrayElement");
             _glBegin = (delegate* unmanaged[Stdcall]<uint, void>)src.GetFuncPtr("glBegin");
+            _glBindTexture = (delegate* unmanaged[Stdcall]<uint, uint, void>)src.GetFuncPtr("glBindTexture");
             _glBitmap = (delegate* unmanaged[Stdcall]<int, int, float, float, float, float, byte[], void>)src.GetFuncPtr("glBitmap");
             _glBlendFunc = (delegate* unmanaged[Stdcall]<uint, uint, void>)src.GetFuncPtr("glBlendFunc");
             _glCallList = (delegate* unmanaged[Stdcall]<uint, void>)src.GetFuncPtr("glCallList");
@@ -671,18 +734,29 @@ namespace LWCSGL.OpenGL
             _glColor4usv = (delegate* unmanaged[Stdcall]<ushort[], void>)src.GetFuncPtr("glColor4usv");
             _glColorMask = (delegate* unmanaged[Stdcall]<bool, bool, bool, bool, void>)src.GetFuncPtr("glColorMask");
             _glColorMaterial = (delegate* unmanaged[Stdcall]<uint, uint, void>)src.GetFuncPtr("glColorMaterial");
+            _glColorPointer = (delegate* unmanaged[Stdcall]<int, uint, int, nint, void>)src.GetFuncPtr("glColorPointer");
             _glCopyPixels = (delegate* unmanaged[Stdcall]<int, int, int, int, uint, void>)src.GetFuncPtr("glCopyPixels");
+            _glCopyTexImage1D = (delegate* unmanaged[Stdcall]<uint, int, uint, int, int, int, int, void>)src.GetFuncPtr("glCopyTexImage1D");
+            _glCopyTexImage2D = (delegate* unmanaged[Stdcall]<uint, int, uint, int, int, int, int, int, void>)src.GetFuncPtr("glCopyTexImage2D");
+            _glCopyTexSubImage1D = (delegate* unmanaged[Stdcall]<uint, int, int, int, int, int, void>)src.GetFuncPtr("glCopyTexSubImage1D");
+            _glCopyTexSubImage2D = (delegate* unmanaged[Stdcall]<uint, int, int, int, int, int, int, int, void>)src.GetFuncPtr("glCopyTexSubImage2D");
             _glCullFace = (delegate* unmanaged[Stdcall]<uint, void>)src.GetFuncPtr("glCullFace");
             _glDeleteLists = (delegate* unmanaged[Stdcall]<uint, int, void>)src.GetFuncPtr("glDeleteLists");
+            _glDeleteTextures = (delegate* unmanaged[Stdcall]<int, uint[], void>)src.GetFuncPtr("glDeleteTextures");
             _glDepthFunc = (delegate* unmanaged[Stdcall]<uint, void>)src.GetFuncPtr("glDepthFunc");
             _glDepthMask = (delegate* unmanaged[Stdcall]<bool, void>)src.GetFuncPtr("glDepthMask");
             _glDepthRange = (delegate* unmanaged[Stdcall]<double, double, void>)src.GetFuncPtr("glDepthRange");
             _glDisable = (delegate* unmanaged[Stdcall]<uint, void>)src.GetFuncPtr("glDisable");
+            _glDisableClientState = (delegate* unmanaged[Stdcall]<uint, void>)src.GetFuncPtr("glDisableClientState");
+            _glDrawArrays = (delegate* unmanaged[Stdcall]<uint, int, int, void>)src.GetFuncPtr("glDrawArrays");
             _glDrawBuffer = (delegate* unmanaged[Stdcall]<uint, void>)src.GetFuncPtr("glDrawBuffer");
+            _glDrawElements = (delegate* unmanaged[Stdcall]<uint, int, uint, nint, void>)src.GetFuncPtr("glDrawElements");
             _glDrawPixels = (delegate* unmanaged[Stdcall]<int, int, uint, uint, nint, void>)src.GetFuncPtr("glDrawPixels");
             _glEdgeFlag = (delegate* unmanaged[Stdcall]<bool, void>)src.GetFuncPtr("glEdgeFlag");
+            _glEdgeFlagPointer = (delegate* unmanaged[Stdcall]<int, nint, void>)src.GetFuncPtr("glEdgeFlagPointer");
             _glEdgeFlagv = (delegate* unmanaged[Stdcall]<bool[], void>)src.GetFuncPtr("glEdgeFlagv");
             _glEnable = (delegate* unmanaged[Stdcall]<uint, void>)src.GetFuncPtr("glEnable");
+            _glEnableClientState = (delegate* unmanaged[Stdcall]<uint, void>)src.GetFuncPtr("glEnableClientState");
             _glEnd = (delegate* unmanaged[Stdcall]<void>)src.GetFuncPtr("glEnd");
             _glEndList = (delegate* unmanaged[Stdcall]<void>)src.GetFuncPtr("glEndList");
             _glEvalCoord1d = (delegate* unmanaged[Stdcall]<double, void>)src.GetFuncPtr("glEvalCoord1d");
@@ -707,6 +781,7 @@ namespace LWCSGL.OpenGL
             _glFrontFace = (delegate* unmanaged[Stdcall]<uint, void>)src.GetFuncPtr("glFrontFace");
             _glFrustum = (delegate* unmanaged[Stdcall]<double, double, double, double, double, double, void>)src.GetFuncPtr("glFrustum");
             _glGenLists = (delegate* unmanaged[Stdcall]<int, uint>)src.GetFuncPtr("glGenLists");
+            _glGenTextures = (delegate* unmanaged[Stdcall]<int, uint[], void>)src.GetFuncPtr("glGenTextures");
             _glGetBooleanv = (delegate* unmanaged[Stdcall]<uint, bool[], void>)src.GetFuncPtr("glGetBooleanv");
             _glGetClipPlane = (delegate* unmanaged[Stdcall]<uint, double[], void>)src.GetFuncPtr("glGetClipPlane");
             _glGetDoublev = (delegate* unmanaged[Stdcall]<uint, double[], void>)src.GetFuncPtr("glGetDoublev");
@@ -723,6 +798,7 @@ namespace LWCSGL.OpenGL
             _glGetPixelMapfv = (delegate* unmanaged[Stdcall]<uint, float[], void>)src.GetFuncPtr("glGetPixelMapfv");
             _glGetPixelMapuiv = (delegate* unmanaged[Stdcall]<uint, uint[], void>)src.GetFuncPtr("glGetPixelMapuiv");
             _glGetPixelMapusv = (delegate* unmanaged[Stdcall]<uint, ushort[], void>)src.GetFuncPtr("glGetPixelMapusv");
+            _glGetPointerv = (delegate* unmanaged[Stdcall]<uint, nint, void>)src.GetFuncPtr("glGetPointerv");
             _glGetPolygonStipple = (delegate* unmanaged[Stdcall]<byte[], void>)src.GetFuncPtr("glGetPolygonStipple");
             _glGetString = (delegate* unmanaged[Stdcall]<uint, nint>)src.GetFuncPtr("glGetString");
             _glGetTexEnvfv = (delegate* unmanaged[Stdcall]<uint, uint, float[], void>)src.GetFuncPtr("glGetTexEnvfv");
@@ -737,6 +813,7 @@ namespace LWCSGL.OpenGL
             _glGetTexParameteriv = (delegate* unmanaged[Stdcall]<uint, uint, int[], void>)src.GetFuncPtr("glGetTexParameteriv");
             _glHint = (delegate* unmanaged[Stdcall]<uint, uint, void>)src.GetFuncPtr("glHint");
             _glIndexMask = (delegate* unmanaged[Stdcall]<uint, void>)src.GetFuncPtr("glIndexMask");
+            _glIndexPointer = (delegate* unmanaged[Stdcall]<uint, int, nint, void>)src.GetFuncPtr("glIndexPointer");
             _glIndexd = (delegate* unmanaged[Stdcall]<double, void>)src.GetFuncPtr("glIndexd");
             _glIndexdv = (delegate* unmanaged[Stdcall]<double[], void>)src.GetFuncPtr("glIndexdv");
             _glIndexf = (delegate* unmanaged[Stdcall]<float, void>)src.GetFuncPtr("glIndexf");
@@ -745,9 +822,13 @@ namespace LWCSGL.OpenGL
             _glIndexiv = (delegate* unmanaged[Stdcall]<int[], void>)src.GetFuncPtr("glIndexiv");
             _glIndexs = (delegate* unmanaged[Stdcall]<short, void>)src.GetFuncPtr("glIndexs");
             _glIndexsv = (delegate* unmanaged[Stdcall]<short[], void>)src.GetFuncPtr("glIndexsv");
+            _glIndexub = (delegate* unmanaged[Stdcall]<byte, void>)src.GetFuncPtr("glIndexub");
+            _glIndexubv = (delegate* unmanaged[Stdcall]<byte[], void>)src.GetFuncPtr("glIndexubv");
             _glInitNames = (delegate* unmanaged[Stdcall]<void>)src.GetFuncPtr("glInitNames");
+            _glInterleavedArrays = (delegate* unmanaged[Stdcall]<uint, int, nint, void>)src.GetFuncPtr("glInterleavedArrays");
             _glIsEnabled = (delegate* unmanaged[Stdcall]<uint, bool>)src.GetFuncPtr("glIsEnabled");
             _glIsList = (delegate* unmanaged[Stdcall]<uint, bool>)src.GetFuncPtr("glIsList");
+            _glIsTexture = (delegate* unmanaged[Stdcall]<uint, bool>)src.GetFuncPtr("glIsTexture");
             _glLightModelf = (delegate* unmanaged[Stdcall]<uint, float, void>)src.GetFuncPtr("glLightModelf");
             _glLightModelfv = (delegate* unmanaged[Stdcall]<uint, float[], void>)src.GetFuncPtr("glLightModelfv");
             _glLightModeli = (delegate* unmanaged[Stdcall]<uint, int, void>)src.GetFuncPtr("glLightModeli");
@@ -790,6 +871,7 @@ namespace LWCSGL.OpenGL
             _glNormal3iv = (delegate* unmanaged[Stdcall]<int[], void>)src.GetFuncPtr("glNormal3iv");
             _glNormal3s = (delegate* unmanaged[Stdcall]<short, short, short, void>)src.GetFuncPtr("glNormal3s");
             _glNormal3sv = (delegate* unmanaged[Stdcall]<short[], void>)src.GetFuncPtr("glNormal3sv");
+            _glNormalPointer = (delegate* unmanaged[Stdcall]<uint, int, nint, void>)src.GetFuncPtr("glNormalPointer");
             _glOrtho = (delegate* unmanaged[Stdcall]<double, double, double, double, double, double, void>)src.GetFuncPtr("glOrtho");
             _glPassThrough = (delegate* unmanaged[Stdcall]<float, void>)src.GetFuncPtr("glPassThrough");
             _glPixelMapfv = (delegate* unmanaged[Stdcall]<uint, int, float[], void>)src.GetFuncPtr("glPixelMapfv");
@@ -802,11 +884,15 @@ namespace LWCSGL.OpenGL
             _glPixelZoom = (delegate* unmanaged[Stdcall]<float, float, void>)src.GetFuncPtr("glPixelZoom");
             _glPointSize = (delegate* unmanaged[Stdcall]<float, void>)src.GetFuncPtr("glPointSize");
             _glPolygonMode = (delegate* unmanaged[Stdcall]<uint, uint, void>)src.GetFuncPtr("glPolygonMode");
+            _glPolygonOffset = (delegate* unmanaged[Stdcall]<float, float, void>)src.GetFuncPtr("glPolygonOffset");
             _glPolygonStipple = (delegate* unmanaged[Stdcall]<byte[], void>)src.GetFuncPtr("glPolygonStipple");
             _glPopAttrib = (delegate* unmanaged[Stdcall]<void>)src.GetFuncPtr("glPopAttrib");
+            _glPopClientAttrib = (delegate* unmanaged[Stdcall]<void>)src.GetFuncPtr("glPopClientAttrib");
             _glPopMatrix = (delegate* unmanaged[Stdcall]<void>)src.GetFuncPtr("glPopMatrix");
             _glPopName = (delegate* unmanaged[Stdcall]<void>)src.GetFuncPtr("glPopName");
+            _glPrioritizeTextures = (delegate* unmanaged[Stdcall]<int, uint[], float[], void>)src.GetFuncPtr("glPrioritizeTextures");
             _glPushAttrib = (delegate* unmanaged[Stdcall]<uint, void>)src.GetFuncPtr("glPushAttrib");
+            _glPushClientAttrib = (delegate* unmanaged[Stdcall]<uint, void>)src.GetFuncPtr("glPushClientAttrib");
             _glPushMatrix = (delegate* unmanaged[Stdcall]<void>)src.GetFuncPtr("glPushMatrix");
             _glPushName = (delegate* unmanaged[Stdcall]<uint, void>)src.GetFuncPtr("glPushName");
             _glRasterPos2d = (delegate* unmanaged[Stdcall]<double, double, void>)src.GetFuncPtr("glRasterPos2d");
@@ -886,6 +972,7 @@ namespace LWCSGL.OpenGL
             _glTexCoord4iv = (delegate* unmanaged[Stdcall]<int[], void>)src.GetFuncPtr("glTexCoord4iv");
             _glTexCoord4s = (delegate* unmanaged[Stdcall]<short, short, short, short, void>)src.GetFuncPtr("glTexCoord4s");
             _glTexCoord4sv = (delegate* unmanaged[Stdcall]<short[], void>)src.GetFuncPtr("glTexCoord4sv");
+            _glTexCoordPointer = (delegate* unmanaged[Stdcall]<int, uint, int, nint, void>)src.GetFuncPtr("glTexCoordPointer");
             _glTexEnvf = (delegate* unmanaged[Stdcall]<uint, uint, float, void>)src.GetFuncPtr("glTexEnvf");
             _glTexEnvfv = (delegate* unmanaged[Stdcall]<uint, uint, float[], void>)src.GetFuncPtr("glTexEnvfv");
             _glTexEnvi = (delegate* unmanaged[Stdcall]<uint, uint, int, void>)src.GetFuncPtr("glTexEnvi");
@@ -902,6 +989,8 @@ namespace LWCSGL.OpenGL
             _glTexParameterfv = (delegate* unmanaged[Stdcall]<uint, uint, float[], void>)src.GetFuncPtr("glTexParameterfv");
             _glTexParameteri = (delegate* unmanaged[Stdcall]<uint, uint, int, void>)src.GetFuncPtr("glTexParameteri");
             _glTexParameteriv = (delegate* unmanaged[Stdcall]<uint, uint, int[], void>)src.GetFuncPtr("glTexParameteriv");
+            _glTexSubImage1D = (delegate* unmanaged[Stdcall]<uint, int, int, int, uint, uint, nint, void>)src.GetFuncPtr("glTexSubImage1D");
+            _glTexSubImage2D = (delegate* unmanaged[Stdcall]<uint, int, int, int, int, int, uint, uint, nint, void>)src.GetFuncPtr("glTexSubImage2D");
             _glTranslated = (delegate* unmanaged[Stdcall]<double, double, double, void>)src.GetFuncPtr("glTranslated");
             _glTranslatef = (delegate* unmanaged[Stdcall]<float, float, float, void>)src.GetFuncPtr("glTranslatef");
             _glVertex2d = (delegate* unmanaged[Stdcall]<double, double, void>)src.GetFuncPtr("glVertex2d");
@@ -928,6 +1017,7 @@ namespace LWCSGL.OpenGL
             _glVertex4iv = (delegate* unmanaged[Stdcall]<int[], void>)src.GetFuncPtr("glVertex4iv");
             _glVertex4s = (delegate* unmanaged[Stdcall]<short, short, short, short, void>)src.GetFuncPtr("glVertex4s");
             _glVertex4sv = (delegate* unmanaged[Stdcall]<short[], void>)src.GetFuncPtr("glVertex4sv");
+            _glVertexPointer = (delegate* unmanaged[Stdcall]<int, uint, int, nint, void>)src.GetFuncPtr("glVertexPointer");
             _glViewport = (delegate* unmanaged[Stdcall]<int, int, int, int, void>)src.GetFuncPtr("glViewport");
         }
 
@@ -935,7 +1025,10 @@ namespace LWCSGL.OpenGL
         {
             _glAccum = null;
             _glAlphaFunc = null;
+            _glAreTexturesResident = null;
+            _glArrayElement = null;
             _glBegin = null;
+            _glBindTexture = null;
             _glBitmap = null;
             _glBlendFunc = null;
             _glCallList = null;
@@ -981,18 +1074,29 @@ namespace LWCSGL.OpenGL
             _glColor4usv = null;
             _glColorMask = null;
             _glColorMaterial = null;
+            _glColorPointer = null;
             _glCopyPixels = null;
+            _glCopyTexImage1D = null;
+            _glCopyTexImage2D = null;
+            _glCopyTexSubImage1D = null;
+            _glCopyTexSubImage2D = null;
             _glCullFace = null;
             _glDeleteLists = null;
+            _glDeleteTextures = null;
             _glDepthFunc = null;
             _glDepthMask = null;
             _glDepthRange = null;
             _glDisable = null;
+            _glDisableClientState = null;
+            _glDrawArrays = null;
             _glDrawBuffer = null;
+            _glDrawElements = null;
             _glDrawPixels = null;
             _glEdgeFlag = null;
+            _glEdgeFlagPointer = null;
             _glEdgeFlagv = null;
             _glEnable = null;
+            _glEnableClientState = null;
             _glEnd = null;
             _glEndList = null;
             _glEvalCoord1d = null;
@@ -1017,6 +1121,7 @@ namespace LWCSGL.OpenGL
             _glFrontFace = null;
             _glFrustum = null;
             _glGenLists = null;
+            _glGenTextures = null;
             _glGetBooleanv = null;
             _glGetClipPlane = null;
             _glGetDoublev = null;
@@ -1033,6 +1138,7 @@ namespace LWCSGL.OpenGL
             _glGetPixelMapfv = null;
             _glGetPixelMapuiv = null;
             _glGetPixelMapusv = null;
+            _glGetPointerv = null;
             _glGetPolygonStipple = null;
             _glGetString = null;
             _glGetTexEnvfv = null;
@@ -1047,6 +1153,7 @@ namespace LWCSGL.OpenGL
             _glGetTexParameteriv = null;
             _glHint = null;
             _glIndexMask = null;
+            _glIndexPointer = null;
             _glIndexd = null;
             _glIndexdv = null;
             _glIndexf = null;
@@ -1055,9 +1162,13 @@ namespace LWCSGL.OpenGL
             _glIndexiv = null;
             _glIndexs = null;
             _glIndexsv = null;
+            _glIndexub = null;
+            _glIndexubv = null;
             _glInitNames = null;
+            _glInterleavedArrays = null;
             _glIsEnabled = null;
             _glIsList = null;
+            _glIsTexture = null;
             _glLightModelf = null;
             _glLightModelfv = null;
             _glLightModeli = null;
@@ -1100,6 +1211,7 @@ namespace LWCSGL.OpenGL
             _glNormal3iv = null;
             _glNormal3s = null;
             _glNormal3sv = null;
+            _glNormalPointer = null;
             _glOrtho = null;
             _glPassThrough = null;
             _glPixelMapfv = null;
@@ -1112,11 +1224,15 @@ namespace LWCSGL.OpenGL
             _glPixelZoom = null;
             _glPointSize = null;
             _glPolygonMode = null;
+            _glPolygonOffset = null;
             _glPolygonStipple = null;
             _glPopAttrib = null;
+            _glPopClientAttrib = null;
             _glPopMatrix = null;
             _glPopName = null;
+            _glPrioritizeTextures = null;
             _glPushAttrib = null;
+            _glPushClientAttrib = null;
             _glPushMatrix = null;
             _glPushName = null;
             _glRasterPos2d = null;
@@ -1196,6 +1312,7 @@ namespace LWCSGL.OpenGL
             _glTexCoord4iv = null;
             _glTexCoord4s = null;
             _glTexCoord4sv = null;
+            _glTexCoordPointer = null;
             _glTexEnvf = null;
             _glTexEnvfv = null;
             _glTexEnvi = null;
@@ -1212,6 +1329,8 @@ namespace LWCSGL.OpenGL
             _glTexParameterfv = null;
             _glTexParameteri = null;
             _glTexParameteriv = null;
+            _glTexSubImage1D = null;
+            _glTexSubImage2D = null;
             _glTranslated = null;
             _glTranslatef = null;
             _glVertex2d = null;
@@ -1238,6 +1357,7 @@ namespace LWCSGL.OpenGL
             _glVertex4iv = null;
             _glVertex4s = null;
             _glVertex4sv = null;
+            _glVertexPointer = null;
             _glViewport = null;
         }
     }

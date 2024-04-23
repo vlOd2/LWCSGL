@@ -10,7 +10,7 @@ namespace LWCSGL.OpenGL
         public const uint GL_CONTEXT_CORE_PROFILE_BIT = 0x00000001u;
         public const uint GL_CONTEXT_COMPATIBILITY_PROFILE_BIT = 0x00000002u;
         public const uint GL_SYNC_FLUSH_COMMANDS_BIT = 0x00000001u;
-        public const uint GL_TIMEOUT_IGNORED = 0xFFFFFFFFFFFFFFFFu;
+        public const ulong GL_TIMEOUT_IGNORED = 0xFFFFFFFFFFFFFFFFu;
         public const uint GL_LINES_ADJACENCY = 0x000Au;
         public const uint GL_LINE_STRIP_ADJACENCY = 0x000Bu;
         public const uint GL_TRIANGLES_ADJACENCY = 0x000Cu;

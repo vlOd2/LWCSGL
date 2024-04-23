@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 
@@ -10,7 +11,7 @@ namespace LWCSGL.Bindgen
     public class BindingsGenerator
     {
         private const string PTR_FUNC_PREFIX = "_";
-        private const string TARGET_PROFILE = "immediate";
+        private const string TARGET_PROFILE = "core";
 
         private static readonly string[] RESERVED_KEYWORDS = new string[]
         {
@@ -391,7 +392,7 @@ namespace LWCSGL.Bindgen
                     foreach (XmlNode enumNode in reqNode.SelectNodes(".//enum"))
                         allowedEnums.Add(enumNode.Attributes["name"].Value);
 
-                    foreach (XmlNode funcNode in reqNode.SelectNodes(".//command"))
+                    foreach (XmlNode funcNode in reqNode.SelectNodes(".//command")) 
                         allowedFunctions.Add(funcNode.Attributes["name"].Value);
                 }
 

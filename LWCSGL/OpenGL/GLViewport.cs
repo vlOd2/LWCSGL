@@ -82,7 +82,6 @@ namespace LWCSGL.OpenGL
 
             wglMakeCurrent(deviceContext, renderContext);
             Log("Initialised WGL");
-            Log($"OpenGL: {GLU.GetGLString(GL11C.GL_VERSION)}");
         }
 
         private void DestroyWGL()
