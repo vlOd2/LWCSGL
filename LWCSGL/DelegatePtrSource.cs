@@ -1,11 +1,6 @@
-﻿using System;
+﻿using LWCSGL.OpenGL.Internal;
+using System;
 using System.Runtime.InteropServices;
-using LWCSGL.OpenGL;
-
-/*
- * Code originally written by Dart (https://github.com/dart25)
- * Modified to meet the needs of the library
-*/
 
 namespace LWCSGL
 {

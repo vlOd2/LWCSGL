@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using LWCSGL.OpenGL;
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using LWCSGL.OpenGL;
 
 namespace LWCSGL.Input
 {
@@ -79,7 +78,7 @@ namespace LWCSGL.Input
             y = pos.Y - form.Location.Y;
             y = form.Height - y - 1;
 
-            if (grabbed) 
+            if (grabbed)
             {
                 int origX = form.Width / 2;
                 int origY = form.Height / 2;
@@ -133,7 +132,7 @@ namespace LWCSGL.Input
             bool leftButton = GetAsyncKeyState((int)Keys.LButton) != 0;
             bool rightButton = GetAsyncKeyState((int)Keys.RButton) != 0;
 
-            if (mWheelRestoreEvent.IsRestore) 
+            if (mWheelRestoreEvent.IsRestore)
             {
                 mEvent = mWheelRestoreEvent;
                 mEvent.IsRestore = false;
@@ -170,7 +169,7 @@ namespace LWCSGL.Input
                 }
             }
 
-            if (hasEvent) 
+            if (hasEvent)
             {
                 mEvent.X = GetX();
                 mEvent.Y = GetY();
@@ -244,7 +243,7 @@ namespace LWCSGL.Input
         /// Gets the wheel delta of the current event
         /// </summary>
         /// <returns>the wheel delta</returns>
-        public static int GetEventDWheel() 
+        public static int GetEventDWheel()
         {
             int delta = instance.mEvent.DeltaWheel;
             instance.mEvent.DeltaWheel = 0;
@@ -275,7 +274,7 @@ namespace LWCSGL.Input
         /// Gets the delta of the mouse wheel since the last call
         /// </summary>
         /// <returns>the wheel delta</returns>
-        public static int GetDWheel() 
+        public static int GetDWheel()
         {
             int delta = instance.deltaWheel;
             instance.deltaWheel = 0;
@@ -309,7 +308,7 @@ namespace LWCSGL.Input
         {
             int vk;
 
-            switch (btn) 
+            switch (btn)
             {
                 case BUTTON_LEFT:
                     vk = (int)Keys.LButton;
@@ -329,7 +328,7 @@ namespace LWCSGL.Input
         /// </summary>
         /// <param name="x">the new x position of the cursor</param>
         /// <param name="y">the new y position of the cursor</param>
-        public static void SetCursorPosition(int x, int y) 
+        public static void SetCursorPosition(int x, int y)
             => Cursor.Position = instance.form.PointToScreen(new Point(x, y));
     }
 }

@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using static LWCSGL.OpenGL.WGL;
+using LWCSGL.OpenGL.Internal;
+using static LWCSGL.OpenGL.Internal.WGL;
 
 namespace LWCSGL.OpenGL
 {
     /// <summary>
     /// A control that draws an OpenGL viewport
     /// </summary>
-    public partial class GLViewport : Control
+    public class GLViewport : Control
     {
         /// <summary>
         /// Whether to log to the console debug messages

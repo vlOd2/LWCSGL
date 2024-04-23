@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-// TODO: Add documentation
+﻿// TODO: Add documentation
 #pragma warning disable 1591
 
 namespace LWCSGL.OpenAL

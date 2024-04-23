@@ -1,9 +1,10 @@
 ﻿using LWCSGL.Input;
+using LWCSGL.OpenGL.Internal;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using static LWCSGL.OpenGL.WGL;
+using static LWCSGL.OpenGL.Internal.WGL;
 
 #pragma warning disable CA1416
 
@@ -184,6 +185,16 @@ namespace LWCSGL.OpenGL
         /// Swaps the front and back buffers
         /// </summary>
         public static void SwapBuffers() => GetViewportSafely().SwapBuffers();
+        /// <summary>
+        /// Gets the internal form (window) used
+        /// </summary>
+        /// <returns>the internal form</returns>
+        public static Form GetInternalForm() => GetFormSafely();
+        /// <summary>
+        /// Gets the internal GL viewport used
+        /// </summary>
+        /// <returns>the internal GL viewport</returns>
+        public static GLViewport GetInternalViewport() => GetViewportSafely();
 
         /// <summary>
         /// Sets the size of the viewport<para></para>
@@ -293,7 +304,17 @@ namespace LWCSGL.OpenGL
             form.Show();
 
             ptrSource = new DelegatePtrSource();
+            GL11.Load(ptrSource);
             GL12.Load(ptrSource);
+            GL13.Load(ptrSource);
+            GL14.Load(ptrSource);
+            GL15.Load(ptrSource);
+            GL20.Load(ptrSource);
+            GL21.Load(ptrSource);
+            GL30.Load(ptrSource);
+            GL31.Load(ptrSource);
+            GL32.Load(ptrSource);
+            GL33.Load(ptrSource);
             GLARB.Load(ptrSource);
             WGLExt.Load(ptrSource);
 
@@ -322,7 +343,17 @@ namespace LWCSGL.OpenGL
         public static void Destroy()
         {
             CheckForDisplay();
+            GL11.Unload();
             GL12.Unload();
+            GL13.Unload();
+            GL14.Unload();
+            GL15.Unload();
+            GL20.Unload();
+            GL21.Unload();
+            GL30.Unload();
+            GL31.Unload();
+            GL32.Unload();
+            GL33.Unload();
             GLARB.Unload();
             WGLExt.Unload();
             instance.doNotCancelCloseEvent = true;

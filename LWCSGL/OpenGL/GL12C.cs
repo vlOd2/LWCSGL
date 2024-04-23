@@ -1,4 +1,3 @@
-﻿// TODO: Add documentation
 #pragma warning disable 1591
 
 namespace LWCSGL.OpenGL

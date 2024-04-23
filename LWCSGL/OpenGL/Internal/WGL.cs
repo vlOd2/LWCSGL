@@ -1,8 +1,7 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace LWCSGL.OpenGL
+namespace LWCSGL.OpenGL.Internal
 {
     // Wiggle shit
     internal class WGL

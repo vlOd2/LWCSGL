@@ -3,12 +3,13 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
-    <RootNamespace>LWCSGL</RootNamespace>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>disable</Nullable>
-    <StartupObject>LWCSGL.LWCSGLTest</StartupObject>
-    <AssemblyName>LWCSGL-Test</AssemblyName>
-    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <StartupObject>LWCSGL.Bindgen.LWCSGLBindgen</StartupObject>
+    <AssemblyName>LWCSGL.Bindgen</AssemblyName>
+    <RootNamespace>LWCSGL.Bindgen</RootNamespace>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -18,9 +19,5 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <IsPublishable>False</IsPublishable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\LWCSGL\LWCSGL.csproj" />
-  </ItemGroup>
 
 </Project>

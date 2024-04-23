@@ -1,10 +1,9 @@
-﻿// TODO: Add documentation
 #pragma warning disable 1591
 
 namespace LWCSGL.OpenGL
 {
     /// <summary>
-    /// Constants for the OpenGL ARB extensions
+    /// Constants for OpenGL ARB
     /// </summary>
     public class GLARBC
     {

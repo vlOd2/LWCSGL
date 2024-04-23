@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using LWCSGL.OpenGL;
+using System.Collections.Generic;
 using System.Windows.Forms;
-using LWCSGL.OpenGL;
 
 namespace LWCSGL.Input
 {

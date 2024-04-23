@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using static LWCSGL.OpenGL.WGL;
+using static LWCSGL.OpenGL.Internal.WGL;
 
-namespace LWCSGL.OpenGL
+namespace LWCSGL.OpenGL.Internal
 {
     internal class DisplayModeUtils
     {

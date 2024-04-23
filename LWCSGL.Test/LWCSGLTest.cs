@@ -1,16 +1,14 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using System.Threading;
-using System.Windows.Forms;
-using LWCSGL.Input;
+﻿using LWCSGL.Input;
 using LWCSGL.OpenGL;
-using static LWCSGL.OpenGL.GL11;
-using static LWCSGL.OpenGL.GL11C;
+using System;
+using System.Runtime.InteropServices;
 using static LWCSGL.OpenAL.AL10;
 using static LWCSGL.OpenAL.AL10C;
 using static LWCSGL.OpenAL.ALC10;
+using static LWCSGL.OpenGL.GL11;
+using static LWCSGL.OpenGL.GL11C;
 
-namespace LWCSGL
+namespace LWCSGL.Test
 {
     public class LWCSGLTest
     {
@@ -19,7 +17,7 @@ namespace LWCSGL
         private const double AL_DEMO_FREQUENCY = 440;
         private const double AL_DEMO_AMPLITUDE = 127;
 
-        private static void SetupBuffer(uint buffer) 
+        private static void SetupBuffer(uint buffer)
         {
             byte[] data = new byte[AL_DEMO_SAMPLE_RATE * AL_DEMO_DURATION];
             double increment = AL_DEMO_FREQUENCY * 2 * Math.PI / AL_DEMO_SAMPLE_RATE;
@@ -42,11 +40,11 @@ namespace LWCSGL
             handle.Free();
         }
 
-        private static void DemoAL() 
+        private static void DemoAL()
         {
             Console.WriteLine("Initialising OpenAL...");
             nint device = alcOpenDevice(null);
-            if (device == nint.Zero) 
+            if (device == nint.Zero)
             {
                 Console.Error.WriteLine($"OpenAL: Failed to open a device");
                 return;
@@ -57,7 +55,7 @@ namespace LWCSGL
                 Console.Error.WriteLine($"OpenAL: Failed to create a context");
                 return;
             }
-            if (!alcMakeContextCurrent(context)) 
+            if (!alcMakeContextCurrent(context))
             {
                 Console.Error.WriteLine($"OpenAL: Failed to make the context current");
                 return;
@@ -91,7 +89,7 @@ namespace LWCSGL
             alcCloseDevice(device);
         }
 
-        private static void SetupGL() 
+        private static void SetupGL()
         {
             glEnable(GL_TEXTURE_2D);
             glShadeModel(GL_SMOOTH);
@@ -102,10 +100,10 @@ namespace LWCSGL
             glMatrixMode(GL_PROJECTION);
             glLoadIdentity();
             glMatrixMode(GL_MODELVIEW);
-            glViewport(0, 0, (uint)Display.GetWidth(), (uint)Display.GetHeight());
+            glViewport(0, 0, Display.GetWidth(), Display.GetHeight());
         }
 
-        private static void SetupCamera() 
+        private static void SetupCamera()
         {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             glMatrixMode(GL_PROJECTION);
@@ -116,7 +114,7 @@ namespace LWCSGL
             glTranslatef(0, 0, -0.3F);
         }
 
-        private static void SetupTexture() 
+        private static void SetupTexture()
         {
             byte[] pixels = new byte[128 * 128 * 4];
             GCHandle pixelsHandle = GCHandle.Alloc(pixels, GCHandleType.Pinned);
@@ -139,12 +137,12 @@ namespace LWCSGL
             glBindTexture(GL_TEXTURE_2D, textureID[0]);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, (int)GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, (int)GL_NEAREST);
-            glTexImage2D(GL_TEXTURE_2D, 0, (int)GL_RGBA, 128, 128, 0, 
+            glTexImage2D(GL_TEXTURE_2D, 0, (int)GL_RGBA, 128, 128, 0,
                 GL_RGBA, GL_UNSIGNED_BYTE, pixelsHandle.AddrOfPinnedObject());
             pixelsHandle.Free();
         }
 
-        private static void DrawTriangle() 
+        private static void DrawTriangle()
         {
             glRotatef(TimeUtil.MilliTime / 10 % 360, 0, 1, 0);
             glColor3f(1.0F, 1.0F, 1.0F);
@@ -177,9 +175,9 @@ namespace LWCSGL
 
             while (!Display.IsCloseRequested())
             {
-                while (Keyboard.Next()) 
+                while (Keyboard.Next())
                 {
-                    if (Keyboard.GetEventKeyState() && !Keyboard.IsRepeatEvent() && 
+                    if (Keyboard.GetEventKeyState() && !Keyboard.IsRepeatEvent() &&
                         Keyboard.GetEventKey() == VirtualKey.Enter)
                         Display.SetFullscreen(!Display.IsFullscreen());
 
@@ -191,12 +189,12 @@ namespace LWCSGL
                         Keyboard.GetEventKey() == VirtualKey.S)
                         Display.PrintStatusReport();
 
-                    string state = Keyboard.IsRepeatEvent() ? "Holding" : 
+                    string state = Keyboard.IsRepeatEvent() ? "Holding" :
                         Keyboard.GetEventKeyState() ? "Pressed" : "Released";
                     Console.WriteLine($"{state} key {Keyboard.GetEventKey()} ({Keyboard.GetEventCharacter()})");
                 }
 
-                while (Mouse.Next()) 
+                while (Mouse.Next())
                 {
                     string state = Mouse.GetEventButtonState() ? "Pressed" : "Released";
                     Console.WriteLine($"{state} mouse button {Mouse.GetEventButton()} @ " +
@@ -213,7 +211,7 @@ namespace LWCSGL
                 Display.Update();
                 frames++;
 
-                if (TimeUtil.MilliTime - frameTime >= 1000) 
+                if (TimeUtil.MilliTime - frameTime >= 1000)
                 {
                     Console.WriteLine($"Framerate: {frames}");
                     frames = 0;
