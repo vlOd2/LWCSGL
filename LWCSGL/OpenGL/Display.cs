@@ -304,19 +304,45 @@ namespace LWCSGL.OpenGL
             form.Show();
 
             ptrSource = new DelegatePtrSource();
+            #region Lib init
             GL11.Load(ptrSource);
+            GL11_NINT.Load(ptrSource);
+            GL11_PTR.Load(ptrSource);
             GL12.Load(ptrSource);
+            GL12_NINT.Load(ptrSource);
+            GL12_PTR.Load(ptrSource);
             GL13.Load(ptrSource);
+            GL13_NINT.Load(ptrSource);
+            GL13_PTR.Load(ptrSource);
             GL14.Load(ptrSource);
+            GL14_NINT.Load(ptrSource);
+            GL14_PTR.Load(ptrSource);
             GL15.Load(ptrSource);
+            GL15_NINT.Load(ptrSource);
+            GL15_PTR.Load(ptrSource);
             GL20.Load(ptrSource);
+            GL20_NINT.Load(ptrSource);
+            GL20_PTR.Load(ptrSource);
             GL21.Load(ptrSource);
+            GL21_NINT.Load(ptrSource);
+            GL21_PTR.Load(ptrSource);
             GL30.Load(ptrSource);
+            GL30_NINT.Load(ptrSource);
+            GL30_PTR.Load(ptrSource);
             GL31.Load(ptrSource);
+            GL31_NINT.Load(ptrSource);
+            GL31_PTR.Load(ptrSource);
             GL32.Load(ptrSource);
+            GL32_NINT.Load(ptrSource);
+            GL32_PTR.Load(ptrSource);
             GL33.Load(ptrSource);
+            GL33_NINT.Load(ptrSource);
+            GL33_PTR.Load(ptrSource);
             GLARB.Load(ptrSource);
+            GLARB_NINT.Load(ptrSource);
+            GLARB_PTR.Load(ptrSource);
             WGLExt.Load(ptrSource);
+            #endregion
 
             supportedExt.Clear();
             string[] extensions = GLU.GetGLString(GL11C.GL_EXTENSIONS).Split(
@@ -343,19 +369,45 @@ namespace LWCSGL.OpenGL
         public static void Destroy()
         {
             CheckForDisplay();
+            #region Lib destroy
             GL11.Unload();
+            GL11_NINT.Unload();
+            GL11_PTR.Unload();
             GL12.Unload();
+            GL12_NINT.Unload();
+            GL12_PTR.Unload();
             GL13.Unload();
+            GL13_NINT.Unload();
+            GL13_PTR.Unload();
             GL14.Unload();
+            GL14_NINT.Unload();
+            GL14_PTR.Unload();
             GL15.Unload();
+            GL15_NINT.Unload();
+            GL15_PTR.Unload();
             GL20.Unload();
+            GL20_NINT.Unload();
+            GL20_PTR.Unload();
             GL21.Unload();
+            GL21_NINT.Unload();
+            GL21_PTR.Unload();
             GL30.Unload();
+            GL30_NINT.Unload();
+            GL30_PTR.Unload();
             GL31.Unload();
+            GL31_NINT.Unload();
+            GL31_PTR.Unload();
             GL32.Unload();
+            GL32_NINT.Unload();
+            GL32_PTR.Unload();
             GL33.Unload();
+            GL33_NINT.Unload();
+            GL33_PTR.Unload();
             GLARB.Unload();
+            GLARB_NINT.Unload();
+            GLARB_PTR.Unload();
             WGLExt.Unload();
+            #endregion
             instance.doNotCancelCloseEvent = true;
             instance.viewport.Dispose();
             instance.form.Close();

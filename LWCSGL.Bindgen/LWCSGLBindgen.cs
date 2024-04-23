@@ -24,21 +24,29 @@
             "GL_ARB_occlusion_query"
         ];
 
+        private static void GenerateAPI(BindingsGenerator gen, 
+            string[] targetFeatures, string[] targetExtensions, string revision)
+        {
+            gen.GenerateAPI(targetFeatures, targetExtensions, revision, true, false, false);
+            gen.GenerateAPI(targetFeatures, targetExtensions, $"{revision}_PTR", false, false, true);
+            gen.GenerateAPI(targetFeatures, targetExtensions, $"{revision}_NINT", true, true, true);
+        }
+
         static void Main(string[] args)
         {
             BindingsGenerator gen = new BindingsGenerator("gl.xml");
-            gen.GenerateAPI(TARGET_FEATURES[0..2], [], "1.1");
-            gen.GenerateAPI([TARGET_FEATURES[2]], [], "1.2");
-            gen.GenerateAPI([TARGET_FEATURES[3]], [], "1.3");
-            gen.GenerateAPI([TARGET_FEATURES[4]], [], "1.4");
-            gen.GenerateAPI([TARGET_FEATURES[5]], [], "1.5");
-            gen.GenerateAPI([TARGET_FEATURES[6]], [], "2.0");
-            gen.GenerateAPI([TARGET_FEATURES[7]], [], "2.1");
-            gen.GenerateAPI([TARGET_FEATURES[8]], [], "3.0");
-            gen.GenerateAPI([TARGET_FEATURES[9]], [], "3.1");
-            gen.GenerateAPI([TARGET_FEATURES[10]], [], "3.2");
-            gen.GenerateAPI([TARGET_FEATURES[11]], [], "3.3");
-            gen.GenerateAPI([], TARGET_EXTENSIONS, "ARB");
+            GenerateAPI(gen, TARGET_FEATURES[0..2], [], "1.1");
+            GenerateAPI(gen, [TARGET_FEATURES[2]], [], "1.2");
+            GenerateAPI(gen, [TARGET_FEATURES[3]], [], "1.3");
+            GenerateAPI(gen, [TARGET_FEATURES[4]], [], "1.4");
+            GenerateAPI(gen, [TARGET_FEATURES[5]], [], "1.5");
+            GenerateAPI(gen, [TARGET_FEATURES[6]], [], "2.0");
+            GenerateAPI(gen, [TARGET_FEATURES[7]], [], "2.1");
+            GenerateAPI(gen, [TARGET_FEATURES[8]], [], "3.0");
+            GenerateAPI(gen, [TARGET_FEATURES[9]], [], "3.1");
+            GenerateAPI(gen, [TARGET_FEATURES[10]], [], "3.2");
+            GenerateAPI(gen, [TARGET_FEATURES[11]], [], "3.3");
+            GenerateAPI(gen, [], TARGET_EXTENSIONS, "ARB");
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿#define ONLY_MANAGED_TYPES
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -51,7 +50,8 @@ namespace LWCSGL.Bindgen
             xml.Load(fileName);
         }
 
-        public void GenerateAPI(string[] targetFeatures, string[] targetExtensions, string revision)
+        public void GenerateAPI(string[] targetFeatures, string[] targetExtensions, 
+            string revision, bool managedOnly, bool onlyManagedPtr, bool noConstants)
         {
             string revisionID = revision.Replace(".", "");
             allowedEnums = new HashSet<string>();
@@ -64,52 +64,54 @@ namespace LWCSGL.Bindgen
             ParseFExt(xml.SelectNodes(".//feature"), targetFeatures);
             ParseFExt(xml.SelectNodes(".//extension"), targetExtensions);
 
-            Console.WriteLine("Writing constants");
-            sb.AppendLine("#pragma warning disable 1591");
-            sb.AppendLine();
-            sb.AppendLine("namespace LWCSGL.OpenGL");
-            sb.AppendLine("{");
-            indent++;
-
-            AppendIndent();
-            sb.AppendLine(@"/// <summary>");
-            AppendIndent();
-            sb.AppendLine(@$"/// Constants for OpenGL {revision}");
-            AppendIndent();
-            sb.AppendLine(@"/// </summary>");
-            AppendIndent();
-            sb.AppendLine($"public class GL{revisionID}C");
-            AppendIndent();
-            sb.AppendLine("{");
-            indent++;
-
-            foreach (XmlNode enumGroupNode in xml.SelectNodes(".//enums"))
+            if (!noConstants) 
             {
-                foreach (XmlNode enumNode in enumGroupNode.SelectNodes(".//enum"))
+                Console.WriteLine("Writing constants");
+                sb.AppendLine("#pragma warning disable 1591");
+                sb.AppendLine();
+                sb.AppendLine("namespace LWCSGL.OpenGL");
+                sb.AppendLine("{");
+                indent++;
+
+                AppendIndent();
+                sb.AppendLine(@"/// <summary>");
+                AppendIndent();
+                sb.AppendLine(@$"/// Constants for OpenGL {revision}");
+                AppendIndent();
+                sb.AppendLine(@"/// </summary>");
+                AppendIndent();
+                sb.AppendLine($"public class GL{revisionID}C");
+                AppendIndent();
+                sb.AppendLine("{");
+                indent++;
+
+                foreach (XmlNode enumGroupNode in xml.SelectNodes(".//enums"))
                 {
-                    string name = enumNode.Attributes["name"].Value;
-                    if (!allowedEnums.Contains(name)) continue;
+                    foreach (XmlNode enumNode in enumGroupNode.SelectNodes(".//enum"))
+                    {
+                        string name = enumNode.Attributes["name"].Value;
+                        if (!allowedEnums.Contains(name)) continue;
 
-                    AppendIndent();
-                    sb.Append("public const uint ");
-                    sb.Append(name);
-                    sb.Append(" = ");
-                    sb.Append(enumNode.Attributes["value"].Value);
-                    sb.Append('u');
-                    sb.Append(';');
-                    sb.AppendLine();
+                        AppendIndent();
+                        sb.Append("public const uint ");
+                        sb.Append(name);
+                        sb.Append(" = ");
+                        sb.Append(enumNode.Attributes["value"].Value);
+                        sb.Append('u');
+                        sb.Append(';');
+                        sb.AppendLine();
+                    }
                 }
+                indent--;
+                AppendIndent();
+                sb.AppendLine("}");
+                sb.AppendLine("}");
+
+                File.WriteAllText($"GL{revisionID}C.cs", sb.ToString());
+                Console.WriteLine("Saved the constants");
+                indent = 0;
+                sb.Clear();
             }
-            indent--;
-            AppendIndent();
-            sb.AppendLine("}");
-            sb.AppendLine("}");
-
-            File.WriteAllText($"GL{revisionID}C.cs", sb.ToString());
-            Console.WriteLine("Saved the constants");
-            indent = 0;
-            sb.Clear();
-
 
             Console.WriteLine("Writing bindings");
             sb.AppendLine("#pragma warning disable 1591");
@@ -149,22 +151,21 @@ namespace LWCSGL.Bindgen
                 else
                     cmdReturnType = "void";
 
-#if ONLY_MANAGED_TYPES
-                if (cmdReturnType.Contains("*"))
+                if (managedOnly && cmdReturnType.Contains("*"))
                     cmdReturnType = "nint";
-#endif
 
                 string pit = protoNode.InnerText;
                 for (int i = 0; i < pit.Length; i++)
                 {
                     if (pit[i] == '*')
                     {
-#if ONLY_MANAGED_TYPES
-                        cmdReturnType = "nint";
-                        break;
-#else
-                        cmdReturnType += '*';
-#endif
+                        if (managedOnly) 
+                        {
+                            cmdReturnType = "nint";
+                            break;
+                        }
+                        else
+                            cmdReturnType += '*';
                     }
                 }
 
@@ -202,12 +203,14 @@ namespace LWCSGL.Bindgen
                         pType = pType.Replace("const", "").Replace(" ", "");
                     }
 
-#if ONLY_MANAGED_TYPES
-                    if (pType.Contains('*') && !pType.Contains("void"))
-                        pType = pType.Replace("*", "[]");
-                    else if (pType.Contains("void"))
-                        pType = "nint";
-#endif
+                    if (managedOnly && pType.Contains('*')) 
+                    {
+                        bool isVoid = pType.Contains("void");
+                        if (!isVoid && !onlyManagedPtr)
+                            pType = pType.Replace("*", "[]");
+                        else if (isVoid || onlyManagedPtr)
+                            pType = "nint";
+                    }
 
                     string pName = paramNode["name"].InnerText;
                     prm.Add(new Parameter(pType, pName));
