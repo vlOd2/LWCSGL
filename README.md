@@ -10,7 +10,7 @@ Invoking any APIs on other platforms will result in an exception!<br>
 Make sure to change the target OS to Windows and add [UseWindowsForms](https://learn.microsoft.com/en-us/dotnet/core/project-sdk/msbuild-props-desktop#usewindowsforms) to your project file so the library can operate correctly, and that you have acess to the native System.Drawing for more features
 
 # 🤔 Examples
-Checks the [testing project](https://github.com/vlOd2/LWCSGL/tree/main/LWCSGL-Test) for an example on how to use this library
+Check out the [testing project](https://github.com/vlOd2/LWCSGL/tree/main/LWCSGL.Test) for an example on how to use this library
 
 # 📌 Features/Information
 - Written in C# (.NET 8)
