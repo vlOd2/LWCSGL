@@ -1,3 +1,7 @@
+# **DEPRECATED**
+THIS PROJECT IS DEPRECATED AND NO LONGER MAINTAINED!!! (it also contains terrible code)<br>
+CONSIDER USING ALTERNATIVES SUCH AS [QuickGL](https://github.com/vlOd2/QuickGL) OR [LegacyGL](https://github.com/vlOd2/LegacyGL)
+
 # ℹ LWCSGL (Lightweight CSharp Game Library)
 Implementation of the LWJGL 2 API in C# 
 
